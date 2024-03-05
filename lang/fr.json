@@ -1,0 +1,41 @@
+{
+  "DEBILUS": {
+    "Ability": {
+      "Str": { "long": "Force", "abbr": "for" },
+      "Con": { "long": "Constitution", "abbr": "con" },
+      "Dex": { "long": "Dextérité", "abbr": "dex" },
+      "Int": { "long": "Intelligence", "abbr": "int" },
+      "Wis": { "long": "Sagesse", "abbr": "sag" },
+      "Cha": { "long": "Charisme", "abbr": "cha" }
+    },
+    "SheetLabels": {
+      "Actor": "Fiche perso Dé-Bilus",
+      "Item": "Fiche objet Dé-Bilus"
+    },
+    "Item": {
+      "Spell": {
+        "SpellLVL": "Level {level} Spells",
+        "AddLVL": "Add LVL {level}"
+      }
+    },
+    "Effect": {
+      "Source": "Source",
+      "Toggle": "Toggle Effect",
+      "Temporary": "Temporary Effects",
+      "Passive": "Passive Effects",
+      "Inactive": "Inactive Effects"
+    }
+  },
+
+  "TYPES": {
+    "Actor": {
+      "character": "Personnage",
+      "npc": "PNJ"
+    },
+    "Item": {
+      "item": "Objet",
+      "feature": "Compétence",
+      "spell": "Sort"
+    }
+  }
+}

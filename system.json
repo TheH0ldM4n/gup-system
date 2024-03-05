@@ -1,0 +1,43 @@
+{
+  "id": "debilus",
+  "title": "Dé-Bilus",
+  "description": "The Dé-Bilus system for FoundryVTT!",
+  "authors": [
+    {
+      "name": "KuroKratos",
+      "discord": "kurokratos"
+    }
+  ],
+  "license": "LICENSE.txt",
+  "readme": "README.md",
+  "changelog": "CHANGELOG.md",
+  "media": [
+    {
+      "type": "setup",
+      "url": "systems/debilus/assets/anvil-impact.png",
+      "thumbnail": "systems/debilus/assets/anvil-impact.png"
+    }
+  ],
+  "version": "0.0.0",
+  "compatibility": {
+    "minimum": 11,
+    "verified": "11.315"
+  },
+  "esmodules": ["module/debilus.mjs"],
+  "styles": ["css/debilus.css"],
+  "languages": [
+    {
+      "lang": "fr",
+      "name": "French",
+      "path": "lang/fr.json"
+    }
+  ],
+  "packs": [],
+  "packFolders": [],
+  "socket": false,
+  "background": "systems/debilus/assets/anvil-impact.png",
+  "gridDistance": 1.5,
+  "gridUnits": "m",
+  "primaryTokenAttribute": "health",
+  "secondaryTokenAttribute": "power"
+}
