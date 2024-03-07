@@ -3,15 +3,13 @@
     "types": ["character", "npc"],
     "templates": {
       "base": {
-        "health": {
-          "value": 10,
-          "min": 0,
-          "max": 10
+        "pv": {
+          "value": 0,
+          "percents": 0
         },
-        "power": {
-          "value": 5,
-          "min": 0,
-          "max": 5
+        "pm": {
+          "value": 0,
+          "percents": 0
         },
         "biography": ""
       }
@@ -21,26 +19,65 @@
       "attributes": {
         "level": {
           "value": 1
+        },
+        "defense": {
+          "value": 0
+        },
+        "initiative": {
+          "value": 0
+        },
+        "esquive": {
+          "value": 0
         }
       },
       "abilities": {
-        "str": {
-          "value": 10
+        "force": {
+          "value": 0,
+          "min": 0,
+          "max": 10
         },
-        "dex": {
-          "value": 10
+        "agilite": {
+          "value": 0,
+          "min": 0,
+          "max": 10
         },
-        "con": {
-          "value": 10
+        "corps": {
+          "value": 0,
+          "min": 0,
+          "max": 10
         },
-        "int": {
-          "value": 10
+        "esprit": {
+          "value": 0,
+          "min": 0,
+          "max": 10
         },
-        "wis": {
-          "value": 10
+        "charisme": {
+          "value": 0,
+          "min": 0,
+          "max": 10
+        }
+      },
+      "aptitudes": {
+        "melee": {
+          "value": 0
         },
-        "cha": {
-          "value": 10
+        "tir": {
+          "value": 0
+        },
+        "furtivite": {
+          "value": 0
+        },
+        "perception": {
+          "value": 0
+        },
+        "savoir": {
+          "value": 0
+        },
+        "social": {
+          "value": 0
+        },
+        "magie": {
+          "value": 0
         }
       }
     },
@@ -50,7 +87,7 @@
     }
   },
   "Item": {
-    "types": ["item", "feature", "spell"],
+    "types": ["item", "competence"],
     "templates": {
       "base": {
         "description": ""
@@ -58,16 +95,10 @@
     },
     "item": {
       "templates": ["base"],
-      "quantity": 1,
-      "weight": 0,
-      "formula": "d20 + @str.mod + ceil(@lvl / 2)"
+      "quantity": 1
     },
-    "feature": {
+    "competence": {
       "templates": ["base"]
-    },
-    "spell": {
-      "templates": ["base"],
-      "spellLevel": 1
     }
   }
 }

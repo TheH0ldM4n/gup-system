@@ -1,8 +1,20 @@
 .window-app {
   font-family: $font-primary;
+
+  .window-content {
+    padding: 0;
+
+    >* {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+  }
+
 }
 
 .rollable {
+
   &:hover,
   &:focus {
     color: #000;

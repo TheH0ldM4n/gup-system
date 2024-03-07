@@ -19,3 +19,154 @@
   @import 'components/items';
   @import 'components/effects';
 }
+
+.caracs {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+  flex: 0;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  padding: 10px 0px;
+  position: relative;
+  background-color: rgba(255,255,255,0.5);
+
+  .carac {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    position: relative;
+
+    img {
+      width: 45px;
+      height: 45px;
+      border:none;
+    }
+
+    input.value {
+      position: absolute;
+      bottom: 0;
+      right: -8px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      text-align: center;
+      font-size: 1em;
+      background-color: white;
+      filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.8));
+      font-weight: bold;
+    }
+
+    .label {
+      position: absolute;
+      width: 28px;
+      text-align: center;
+      z-index: 10;
+      font-size: 0.7em;
+      font-weight: bold;
+      box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+      background: white;
+      border-radius: 5px;
+
+      &.bottom-right {
+        bottom: 4px;
+        right: 0px;
+      }
+    }
+
+    input.value-current {
+      position: absolute;
+      top: 7px;
+      left: -7px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      text-align: center;
+      font-size: 1em;
+      background-color: white;
+      filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.8));
+      font-weight: bold;
+    }
+  }
+
+}
+
+.bars {
+
+  .wrapper {
+    padding-left: 34px;
+    position: relative;
+    filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.8));
+
+    img.icon {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 40px;
+      height: 40px;
+      border: none;
+      transform: translateY(-25%);
+      z-index: 501;
+    }
+
+    .bar {
+      height: 20px;
+      width: 97%;
+      background-color: #f4f4f4;
+      position: relative;
+      margin: 20px 0;
+      padding-left: 40px;
+
+      input {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        z-index: 500;
+        font-weight: bold;
+        border: none;
+        padding-left: 15px;
+
+        &:focus {
+          outline: none;
+          border: none;
+          box-shadow: none;
+        }
+
+      }
+
+      .max {
+        position: absolute;
+        top: 0;
+        right: 3px;
+        font-weight: bold;
+        z-index: 501;
+        line-height: 20px;
+      }
+
+      .current {
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        &.pv {
+          background-color: rgb(255,160,160);
+        }
+
+        &.pm {
+          background-color: rgb(160,160,255);
+        }
+
+      }
+
+    }
+  }
+
+
+}

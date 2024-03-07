@@ -6,9 +6,9 @@
 export const preloadHandlebarsTemplates = async function () {
   return loadTemplates([
     // Actor partials.
-    'systems/debilus/templates/actor/parts/actor-features.hbs',
+    'systems/debilus/templates/actor/parts/actor-aptitudes.hbs',
     'systems/debilus/templates/actor/parts/actor-items.hbs',
-    'systems/debilus/templates/actor/parts/actor-spells.hbs',
+    'systems/debilus/templates/actor/parts/actor-competences.hbs',
     'systems/debilus/templates/actor/parts/actor-effects.hbs',
     // Item partials
     'systems/debilus/templates/item/parts/item-effects.hbs',

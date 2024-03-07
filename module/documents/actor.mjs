@@ -43,15 +43,60 @@ export class DebilusActor extends Actor {
    */
   _prepareCharacterData(actorData) {
     if (actorData.type !== 'character') return;
-
-    // Make modifications to data here. For example:
     const systemData = actorData.system;
-
-    // Loop through ability scores, and add their modifiers to our sheet output.
-    for (let [key, ability] of Object.entries(systemData.abilities)) {
-      // Calculate the modifier using d20 rules.
-      ability.mod = Math.floor((ability.value - 10) / 2);
+    const ab = systemData.abilities;
+    const att = systemData.attributes;
+    const aptitudes = systemData.aptitudes;
+    
+    // Prevent attributes from going over max or under 0
+    for (let [k, v] of Object.entries(att)) {
+      if (v.value < 0) {
+        v.value = 0;
+      } else if (v.value > v.max) {
+        v.value = v.max;
+      }
     }
+
+    // Prevent abilities from going under 0
+    for (let [k, v] of Object.entries(ab)) {
+      if (v.value < 0) {
+        v.value = 0;
+      }
+    }
+     
+    // Santé
+    systemData.pv.max = 10 + 2 * ( att.level.value * (ab.corps.value > 0 ? ab.corps.value : 1) );
+    if (systemData.pv.value < 0) {
+      systemData.pv.value = 0;
+    }
+    if (systemData.pv.value > systemData.pv.max) {
+      systemData.pv.value = systemData.pv.max;
+    }
+    systemData.pv.percents = Math.floor(100 * systemData.pv.value / systemData.pv.max);
+
+    // Mana
+    systemData.pm.max = 10 + 2 * ( att.level.value * (ab.esprit.value > 0 ? ab.esprit.value : 1) );
+    if (systemData.pm.value < 0) {
+      systemData.pm.value = 0;
+    }
+    if (systemData.pm.value > systemData.pm.max) {
+      systemData.pm.value = systemData.pm.max;
+    }
+    systemData.pm.percents = Math.floor(100 * systemData.pm.value / systemData.pm.max);
+    
+    // Defense, Esquive et Initiative
+    att.defense.value    = 10 + Math.floor((ab.corps.value + att.level.value) / 2);
+    att.esquive.value    = 10 + Math.floor((ab.agilite.value + att.level.value) / 2);
+    att.initiative.value = ab.corps.value + ab.agilite.value + Math.floor(att.level.value/2);
+
+    // Compétences dérivées
+    aptitudes.melee.value       = Math.floor((ab.force.value        + ab.corps.value + att.level.value)    / 3);
+    aptitudes.tir.value         = Math.floor((ab.agilite.value      + ab.corps.value + att.level.value)    / 3);
+    aptitudes.furtivite.value   = Math.floor((ab.agilite.value      + ab.esprit.value + att.level.value)   / 3);
+    aptitudes.perception.value  = Math.floor((ab.esprit.value * 2   + att.level.value)                     / 3);
+    aptitudes.savoir.value      = Math.floor((ab.esprit.value       + ab.charisme.value + att.level.value) / 3);
+    aptitudes.social.value      = Math.floor((ab.charisme.value * 2 + att.level.value)                     / 3);
+    aptitudes.magie.value       = Math.floor((ab.esprit.value * 2   + att.level.value)                     / 3);
   }
 
   /**
@@ -86,7 +131,7 @@ export class DebilusActor extends Actor {
     if (this.type !== 'character') return;
 
     // Copy the ability scores to the top level, so that rolls can use
-    // formulas like `@str.mod + 4`.
+    // formulas like `@force.mod + 4`.
     if (data.abilities) {
       for (let [k, v] of Object.entries(data.abilities)) {
         data[k] = foundry.utils.deepClone(v);
@@ -97,6 +142,8 @@ export class DebilusActor extends Actor {
     if (data.attributes.level) {
       data.lvl = data.attributes.level.value ?? 0;
     }
+
+    console.log("data", data);
   }
 
   /**

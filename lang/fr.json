@@ -1,22 +1,15 @@
 {
   "DEBILUS": {
     "Ability": {
-      "Str": { "long": "Force", "abbr": "for" },
-      "Con": { "long": "Constitution", "abbr": "con" },
-      "Dex": { "long": "Dextérité", "abbr": "dex" },
-      "Int": { "long": "Intelligence", "abbr": "int" },
-      "Wis": { "long": "Sagesse", "abbr": "sag" },
-      "Cha": { "long": "Charisme", "abbr": "cha" }
+      "Force": { "long": "Force", "abbr": "for" },
+      "Agilite": { "long": "Agilité", "abbr": "agi" },
+      "Corps": { "long": "Corps", "abbr": "cor" },
+      "Esprit": { "long": "Esprit", "abbr": "esp" },
+      "Charisme": { "long": "Charisme", "abbr": "cha" }
     },
     "SheetLabels": {
       "Actor": "Fiche perso Dé-Bilus",
       "Item": "Fiche objet Dé-Bilus"
-    },
-    "Item": {
-      "Spell": {
-        "SpellLVL": "Level {level} Spells",
-        "AddLVL": "Add LVL {level}"
-      }
     },
     "Effect": {
       "Source": "Source",
@@ -34,8 +27,7 @@
     },
     "Item": {
       "item": "Objet",
-      "feature": "Compétence",
-      "spell": "Sort"
+      "competence": "Compétence"
     }
   }
 }

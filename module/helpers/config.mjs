@@ -5,19 +5,17 @@ export const DEBILUS = {};
  * @type {Object}
  */
 DEBILUS.abilities = {
-  str: 'DEBILUS.Ability.Str.long',
-  dex: 'DEBILUS.Ability.Dex.long',
-  con: 'DEBILUS.Ability.Con.long',
-  int: 'DEBILUS.Ability.Int.long',
-  wis: 'DEBILUS.Ability.Wis.long',
-  cha: 'DEBILUS.Ability.Cha.long',
+  force: 'DEBILUS.Ability.Force.long',
+  agilite: 'DEBILUS.Ability.Agilite.long',
+  corps: 'DEBILUS.Ability.Corps.long',
+  esprit: 'DEBILUS.Ability.Esprit.long',
+  charisme: 'DEBILUS.Ability.Charisme.long',
 };
 
 DEBILUS.abilityAbbreviations = {
-  str: 'DEBILUS.Ability.Str.abbr',
-  dex: 'DEBILUS.Ability.Dex.abbr',
-  con: 'DEBILUS.Ability.Con.abbr',
-  int: 'DEBILUS.Ability.Int.abbr',
-  wis: 'DEBILUS.Ability.Wis.abbr',
-  cha: 'DEBILUS.Ability.Cha.abbr',
+  force: 'DEBILUS.Ability.Force.abbr',
+  agilite: 'DEBILUS.Ability.Agilite.abbr',
+  corps: 'DEBILUS.Ability.Corps.abbr',
+  esprit: 'DEBILUS.Ability.Esprit.abbr',
+  charisme: 'DEBILUS.Ability.Charisme.abbr',
 };

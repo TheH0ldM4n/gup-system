@@ -14,8 +14,8 @@
   "media": [
     {
       "type": "setup",
-      "url": "systems/debilus/assets/anvil-impact.png",
-      "thumbnail": "systems/debilus/assets/anvil-impact.png"
+      "url": "systems/debilus/assets/debilus.jpg",
+      "thumbnail": "systems/debilus/assets/debilus.jpg"
     }
   ],
   "version": "0.0.0",
@@ -35,9 +35,9 @@
   "packs": [],
   "packFolders": [],
   "socket": false,
-  "background": "systems/debilus/assets/anvil-impact.png",
+  "background": "systems/debilus/assets/debilus.jpg",
   "gridDistance": 1.5,
   "gridUnits": "m",
-  "primaryTokenAttribute": "health",
-  "secondaryTokenAttribute": "power"
+  "primaryTokenAttribute": "pv",
+  "secondaryTokenAttribute": "pm"
 }

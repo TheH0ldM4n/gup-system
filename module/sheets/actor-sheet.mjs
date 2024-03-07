@@ -12,13 +12,14 @@ export class DebilusActorSheet extends ActorSheet {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['debilus', 'sheet', 'actor'],
-      width: 600,
+      width: 450,
       height: 600,
+      resizable: false,
       tabs: [
         {
           navSelector: '.sheet-tabs',
           contentSelector: '.sheet-body',
-          initial: 'features',
+          initial: 'aptitudes',
         },
       ],
     });
@@ -94,19 +95,8 @@ export class DebilusActorSheet extends ActorSheet {
   _prepareItems(context) {
     // Initialize containers.
     const gear = [];
-    const features = [];
-    const spells = {
-      0: [],
-      1: [],
-      2: [],
-      3: [],
-      4: [],
-      5: [],
-      6: [],
-      7: [],
-      8: [],
-      9: [],
-    };
+    const aptitudes = [];
+    const competences = [];
 
     // Iterate through items, allocating to containers
     for (let i of context.items) {
@@ -115,22 +105,20 @@ export class DebilusActorSheet extends ActorSheet {
       if (i.type === 'item') {
         gear.push(i);
       }
-      // Append to features.
-      else if (i.type === 'feature') {
-        features.push(i);
+      // Append to aptitudes.
+      else if (i.type === 'aptitude') {
+        aptitudes.push(i);
       }
-      // Append to spells.
-      else if (i.type === 'spell') {
-        if (i.system.spellLevel != undefined) {
-          spells[i.system.spellLevel].push(i);
-        }
+      // Append to competences.
+      else if (i.type === 'competence') {
+          competences.push(i);
       }
     }
 
     // Assign and return
     context.gear = gear;
-    context.features = features;
-    context.spells = spells;
+    context.aptitudes = aptitudes;
+    context.competences = competences;
   }
 
   /* -------------------------------------------- */

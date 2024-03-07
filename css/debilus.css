@@ -3,6 +3,14 @@
 .window-app {
   font-family: "Roboto", sans-serif;
 }
+.window-app .window-content {
+  padding: 0;
+}
+.window-app .window-content > * {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
 
 .rollable:hover, .rollable:focus {
   color: #000;
@@ -214,32 +222,77 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
-  margin-bottom: 10px;
+  margin-bottom: 0px;
+  position: relative;
+  overflow: visible;
 }
 .debilus .sheet-header .profile-img {
-  flex: 0 0 100px;
-  height: 100px;
-  margin-right: 10px;
+  flex: none;
+  width: 125px;
+  height: auto;
+  border: none;
+  border-radius: 0;
 }
 .debilus .sheet-header .header-fields {
   flex: 1;
 }
-.debilus .sheet-header h1.charname {
-  height: 50px;
+.debilus .sheet-header .charname {
+  display: flex;
+  height: 20px;
   padding: 0px;
   margin: 5px 0;
-  border-bottom: 0;
+  background: none;
+  border-bottom: 1px solid black;
+  border: none;
+  flex: 1;
 }
-.debilus .sheet-header h1.charname input {
+.debilus .sheet-header .charname input {
   width: 100%;
   height: 100%;
   margin: 0;
+  background: none;
+  border: none;
+  text-align: center;
+  font-size: 1.4em;
+  font-weight: bold;
+}
+.debilus .sheet-header .level {
+  position: absolute;
+  left: 91px;
+  top: 91px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border: 1px solid black;
+  background: none;
+}
+.debilus .sheet-header .level input {
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  font-size: 1.7em;
+  font-weight: bolder;
+  background: white;
+  border: none;
+  text-align: center;
+  border-radius: 0;
 }
 .debilus .sheet-tabs {
   flex: 0;
+  border-top: 0 !important;
+  margin-top: 0 !important;
 }
-.debilus .sheet-body,
-.debilus .sheet-body .tab,
+.debilus .sheet-body {
+  height: 343px;
+}
+.debilus .sheet-body .tab {
+  height: 100%;
+  overflow-y: auto;
+}
 .debilus .sheet-body .tab .editor {
   height: 100%;
 }
@@ -364,3 +417,133 @@
 .debilus .effects .item .effect-controls {
   border: none;
 }
+
+.caracs {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+  flex: 0;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  padding: 10px 0px;
+  position: relative;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+.caracs .carac {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  position: relative;
+}
+.caracs .carac img {
+  width: 45px;
+  height: 45px;
+  border: none;
+}
+.caracs .carac input.value {
+  position: absolute;
+  bottom: 0;
+  right: -8px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 1em;
+  background-color: white;
+  filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.8));
+  font-weight: bold;
+}
+.caracs .carac .label {
+  position: absolute;
+  width: 28px;
+  text-align: center;
+  z-index: 10;
+  font-size: 0.7em;
+  font-weight: bold;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+  background: white;
+  border-radius: 5px;
+}
+.caracs .carac .label.bottom-right {
+  bottom: 4px;
+  right: 0px;
+}
+.caracs .carac input.value-current {
+  position: absolute;
+  top: 7px;
+  left: -7px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 1em;
+  background-color: white;
+  filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.8));
+  font-weight: bold;
+}
+
+.bars .wrapper {
+  padding-left: 34px;
+  position: relative;
+  filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.8));
+}
+.bars .wrapper img.icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  border: none;
+  transform: translateY(-25%);
+  z-index: 501;
+}
+.bars .wrapper .bar {
+  height: 20px;
+  width: 97%;
+  background-color: #f4f4f4;
+  position: relative;
+  margin: 20px 0;
+  padding-left: 40px;
+}
+.bars .wrapper .bar input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  z-index: 500;
+  font-weight: bold;
+  border: none;
+  padding-left: 15px;
+}
+.bars .wrapper .bar input:focus {
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+.bars .wrapper .bar .max {
+  position: absolute;
+  top: 0;
+  right: 3px;
+  font-weight: bold;
+  z-index: 501;
+  line-height: 20px;
+}
+.bars .wrapper .bar .current {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.bars .wrapper .bar .current.pv {
+  background-color: rgb(255, 160, 160);
+}
+.bars .wrapper .bar .current.pm {
+  background-color: rgb(160, 160, 255);
+}
+
+/*# sourceMappingURL=debilus.css.map */
