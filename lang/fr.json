@@ -1,11 +1,59 @@
 {
+  "force": "Force",
+  "agilite": "Agilité",
+  "corps": "Corps",
+  "esprit": "Esprit",
+  "charisme": "Charisme",
+  "defense": "Défense",
+  "esquive": "Esquive",
+  "melee": "Mêlée",
+  "tir": "Tir",
+  "furtivite": "Furtivité",
+  "perception": "Perception",
+  "savoir": "Savoir",
+  "social": "Social",
+  "magie": "Magie",
+  "damage": "Dégâts",
+  "heal": "Soins",
+  "item": "Objet",
+  "competence": "Compétence",
+  "ability": "Caractéristique",
+  "aptitude": "Aptitude",
+
   "DEBILUS": {
+    "Settings": {
+      "Labels": {
+        "Setting": "Cadre"
+      },
+      "Hints": {
+        "Setting": "Le cadre de jeu de votre campagne. Utilisé pour déterminer les caractéristiques, aptitudes, compétences et effets disponibles ainsi que des règles spécifiques du jeu et certaines illustrations."
+      },
+      "Setting": {
+        "Fantasy": "Fantasy",
+        "SciFi": "Sci-Fi",
+        "Modern": "Moderne",
+        "WoW": "Spécifique : World of Warcraft",
+        "StarWars": "Spécifique : Star Wars",
+        "Mague": "Spécifique : Mague"
+      }
+    },
     "Ability": {
       "Force": { "long": "Force", "abbr": "for" },
       "Agilite": { "long": "Agilité", "abbr": "agi" },
       "Corps": { "long": "Corps", "abbr": "cor" },
       "Esprit": { "long": "Esprit", "abbr": "esp" },
       "Charisme": { "long": "Charisme", "abbr": "cha" }
+    },
+    "Aptitude": {
+      "Defense": "Défense",
+      "Esquive": "Esquive",
+      "Melee": "Mêlée",
+      "Tir": "Tir",
+      "Furtivite": "Furtivité",
+      "Perception": "Perception",
+      "Savoir": "Savoir",
+      "Social": "Social",
+      "Magie": "Magie"
     },
     "SheetLabels": {
       "Actor": "Fiche perso Dé-Bilus",
@@ -17,6 +65,11 @@
       "Temporary": "Temporary Effects",
       "Passive": "Passive Effects",
       "Inactive": "Inactive Effects"
+    },
+    "roll": {
+      "skillcheck": "Test de compétence",
+      "critical": "Réussite critique",
+      "fumble": "Échec critique"
     }
   },
 

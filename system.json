@@ -34,10 +34,16 @@
   ],
   "packs": [],
   "packFolders": [],
-  "socket": false,
+  "dependencies": [
+    {
+      "name": "socketlib",
+      "manifest": "https://raw.githubusercontent.com/manuelVo/foundryvtt-socketlib/master/module.json"
+    }
+  ],
+  "socket": true,
   "background": "systems/debilus/assets/debilus.jpg",
   "gridDistance": 1.5,
   "gridUnits": "m",
   "primaryTokenAttribute": "pv",
-  "secondaryTokenAttribute": "pm"
+  "secondaryTokenAttribute": "actions"
 }

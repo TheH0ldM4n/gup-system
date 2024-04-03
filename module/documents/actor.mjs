@@ -64,7 +64,7 @@ export class DebilusActor extends Actor {
       }
     }
      
-    // Santé
+    // Health
     systemData.pv.max = 10 + 2 * ( att.level.value * (ab.corps.value > 0 ? ab.corps.value : 1) );
     if (systemData.pv.value < 0) {
       systemData.pv.value = 0;
@@ -72,31 +72,41 @@ export class DebilusActor extends Actor {
     if (systemData.pv.value > systemData.pv.max) {
       systemData.pv.value = systemData.pv.max;
     }
-    systemData.pv.percents = Math.floor(100 * systemData.pv.value / systemData.pv.max);
-
-    // Mana
-    systemData.pm.max = 10 + 2 * ( att.level.value * (ab.esprit.value > 0 ? ab.esprit.value : 1) );
-    if (systemData.pm.value < 0) {
-      systemData.pm.value = 0;
-    }
-    if (systemData.pm.value > systemData.pm.max) {
-      systemData.pm.value = systemData.pm.max;
-    }
-    systemData.pm.percents = Math.floor(100 * systemData.pm.value / systemData.pm.max);
     
-    // Defense, Esquive et Initiative
-    att.defense.value    = 10 + Math.floor((ab.corps.value + att.level.value) / 2);
-    att.esquive.value    = 10 + Math.floor((ab.agilite.value + att.level.value) / 2);
-    att.initiative.value = ab.corps.value + ab.agilite.value + Math.floor(att.level.value/2);
+    // Defense, Flee & Initiative
+    att.defense.value    = 10 + Math.floor((ab.corps.value + ab.agilite.value + att.level.value) / 3) + parseInt(att.armor.value) + (att.shield.value ? 2 : 0);
 
-    // Compétences dérivées
-    aptitudes.melee.value       = Math.floor((ab.force.value        + ab.corps.value + att.level.value)    / 3);
-    aptitudes.tir.value         = Math.floor((ab.agilite.value      + ab.corps.value + att.level.value)    / 3);
-    aptitudes.furtivite.value   = Math.floor((ab.agilite.value      + ab.esprit.value + att.level.value)   / 3);
-    aptitudes.perception.value  = Math.floor((ab.esprit.value * 2   + att.level.value)                     / 3);
+    att.actions.max      = 5;
+    // Id att.actions.value id not set or not a number, set it to att.actions.max 
+    if (isNaN(att.actions.value)) {
+      att.actions.value = att.actions.max;
+    }
+    if (att.actions.value > att.actions.max) {
+      att.actions.value = att.actions.max;
+    }
+    if(att.actions.value < 0) {
+      att.actions.value = 0;
+    }
+
+    const radius = 27;
+    const circumference = 2 * Math.PI * radius;
+    att.actions.percents = circumference - (att.actions.value / 5) * circumference;
+    systemData.pv.percents = circumference - (systemData.pv.value / systemData.pv.max) * circumference;
+
+    // Derivated aptitudes
+    aptitudes.melee.value       = Math.floor((ab.force.value        + ab.force.value    + att.level.value) / 3);
+    aptitudes.tir.value         = Math.floor((ab.agilite.value      + ab.agilite.value  + att.level.value) / 3);
+    aptitudes.furtivite.value   = Math.floor((ab.agilite.value      + ab.esprit.value   + att.level.value) / 3);
+    aptitudes.esquive.value     = Math.floor((ab.agilite.value      + ab.corps.value    + att.level.value) / 3);
+    aptitudes.perception.value  = Math.floor((ab.esprit.value       + ab.esprit.value   + att.level.value) / 3);
     aptitudes.savoir.value      = Math.floor((ab.esprit.value       + ab.charisme.value + att.level.value) / 3);
-    aptitudes.social.value      = Math.floor((ab.charisme.value * 2 + att.level.value)                     / 3);
-    aptitudes.magie.value       = Math.floor((ab.esprit.value * 2   + att.level.value)                     / 3);
+    aptitudes.social.value      = Math.floor((ab.charisme.value     + ab.charisme.value + att.level.value) / 3);
+    aptitudes.magie.value       = Math.floor((ab.esprit.value       + ab.corps.value    + att.level.value) / 3);
+
+    delete aptitudes.defense;
+    delete systemData.pm;
+    delete att.esquive;
+
   }
 
   /**
@@ -142,8 +152,6 @@ export class DebilusActor extends Actor {
     if (data.attributes.level) {
       data.lvl = data.attributes.level.value ?? 0;
     }
-
-    console.log("data", data);
   }
 
   /**

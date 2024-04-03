@@ -12,6 +12,10 @@
 @import 'global/grid';
 @import 'global/flex';
 
+@import 'documents/actor';
+@import 'documents/item';
+@import 'components/roll';
+
 /* Styles limited to debilus sheets */
 .debilus {
   @import 'components/forms';
@@ -20,153 +24,67 @@
   @import 'components/effects';
 }
 
-.caracs {
-  width: 100%;
-  display: flex;
-  justify-content: space-evenly;
-  flex-direction: row;
-  flex: 0;
-  box-shadow: 0 0 10px rgba(0,0,0,0.5);
-  padding: 10px 0px;
-  position: relative;
-  background-color: rgba(255,255,255,0.5);
+/* Custom CSS */
 
-  .carac {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 0;
-    padding: 0;
-    transition: all 0.3s ease-in-out;
-    cursor: pointer;
-    position: relative;
-
-    img {
-      width: 45px;
-      height: 45px;
-      border:none;
-    }
-
-    input.value {
-      position: absolute;
-      bottom: 0;
-      right: -8px;
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      text-align: center;
-      font-size: 1em;
-      background-color: white;
-      filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.8));
-      font-weight: bold;
-    }
-
-    .label {
-      position: absolute;
-      width: 28px;
-      text-align: center;
-      z-index: 10;
-      font-size: 0.7em;
-      font-weight: bold;
-      box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
-      background: white;
-      border-radius: 5px;
-
-      &.bottom-right {
-        bottom: 4px;
-        right: 0px;
-      }
-    }
-
-    input.value-current {
-      position: absolute;
-      top: 7px;
-      left: -7px;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      text-align: center;
-      font-size: 1em;
-      background-color: white;
-      filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.8));
-      font-weight: bold;
-    }
-  }
-
+.chat-message .message-header h4,
+.chat-message .message-header .message-metadata .message-timestamp,
+.chat-message .message-header .message-metadata .message-delete .fas
+{
+	color: rgba(255,255,255,0.3) !important;
 }
 
-.bars {
+.chat-message {
+	position: relative
+}
 
-  .wrapper {
-    padding-left: 34px;
-    position: relative;
-    filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.8));
+.chat-message,
+.chat-message.whisper,
+.chat-message.whisper.blind
+{
+	background-image: none;
+	color: wheat;
+	background-color: rgb(21 21 22);
+	border-radius: 5px;
+	box-shadow: 0 0 5px rgba(255,255,255, 0.7);
+	margin: 15px 10px;
+	border: none;
+}
 
-    img.icon {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 40px;
-      height: 40px;
-      border: none;
-      transform: translateY(-25%);
-      z-index: 501;
-    }
-
-    .bar {
-      height: 20px;
-      width: 97%;
-      background-color: #f4f4f4;
-      position: relative;
-      margin: 20px 0;
-      padding-left: 40px;
-
-      input {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100%;
-        z-index: 500;
-        font-weight: bold;
-        border: none;
-        padding-left: 15px;
-
-        &:focus {
-          outline: none;
-          border: none;
-          box-shadow: none;
-        }
-
-      }
-
-      .max {
-        position: absolute;
-        top: 0;
-        right: 3px;
-        font-weight: bold;
-        z-index: 501;
-        line-height: 20px;
-      }
-
-      .current {
-        height: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-
-        &.pv {
-          background-color: rgb(255,160,160);
-        }
-
-        &.pm {
-          background-color: rgb(160,160,255);
-        }
-
-      }
-
-    }
-  }
+.chat-message.whisper {
+	box-shadow: 0 0 5px rgba(255,100,255, 0.7);
+	background-color: rgb(35 21 35);
+}
 
 
+.chat-message.whisper.blind {
+	box-shadow: 0 0 5px rgba(255,255,0, 0.7);
+	background-color: rgb(35 35 15);
+}
+
+.chat-message * {
+	color: wheat;
+}
+
+.dice-result .dice-formula,
+.dice-result .dice-total
+{
+	background-color: rgba(255,255,200,0.15);
+	box-shadow: none;
+}
+
+.debilus-sheet {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100% !important;
+	background-color: #eaeaea;
+}
+
+img.inline {
+	width: 24px;
+	height: 24px;
+	vertical-align: middle;
+    border: none;
+    filter: drop-shadow(0px 0px 2px black);
 }

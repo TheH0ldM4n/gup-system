@@ -29,6 +29,14 @@ export class DebilusItem extends Item {
     return rollData;
   }
 
+  async increaseQuantity() {
+    await this.update({ 'data.quantity': this.system.quantity + 1});
+  }
+
+  async decreaseQuantity() {
+    await this.update({ 'data.quantity': this.system.quantity - 1});
+  }
+
   /**
    * Handle clickable rolls.
    * @param {Event} event   The originating click event

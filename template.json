@@ -7,10 +7,6 @@
           "value": 0,
           "percents": 0
         },
-        "pm": {
-          "value": 0,
-          "percents": 0
-        },
         "biography": ""
       }
     },
@@ -23,11 +19,16 @@
         "defense": {
           "value": 0
         },
-        "initiative": {
+        "armor": {
           "value": 0
         },
-        "esquive": {
-          "value": 0
+        "shield": {
+          "value": false
+        },
+        "actions": {
+          "max": 5,
+          "value": 0,
+          "percents": 0
         }
       },
       "abilities": {
@@ -64,6 +65,9 @@
         "tir": {
           "value": 0
         },
+        "esquive": {
+          "value": 0
+        },
         "furtivite": {
           "value": 0
         },
@@ -79,6 +83,11 @@
         "magie": {
           "value": 0
         }
+      },
+      "money": {
+        "gold": 0,
+        "silver": 0,
+        "copper": 0
       }
     },
     "npc": {
@@ -90,15 +99,27 @@
     "types": ["item", "competence"],
     "templates": {
       "base": {
-        "description": ""
+        "description": "",
+        "rollType": "none",
+        "rollAbility": "none",
+        "rollAptitude": "none",
+        "valueType": "none",
+        "value": 0,
+        "actions": 0,
+        "bonusValueIdentifier": ""
       }
     },
     "item": {
       "templates": ["base"],
-      "quantity": 1
+      "quantity": 1,
+      "type": "misc"
     },
     "competence": {
-      "templates": ["base"]
+      "templates": ["base"],
+      "cooldown": {
+        "value": 0,
+        "remaining": 0
+      }
     }
   }
 }

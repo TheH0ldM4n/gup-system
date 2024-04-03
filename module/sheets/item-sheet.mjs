@@ -12,15 +12,9 @@ export class DebilusItemSheet extends ItemSheet {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ['debilus', 'sheet', 'item'],
-      width: 520,
-      height: 480,
-      tabs: [
-        {
-          navSelector: '.sheet-tabs',
-          contentSelector: '.sheet-body',
-          initial: 'description',
-        },
-      ],
+      width: 500,
+      height: 383,
+      resizable: false,
     });
   }
 

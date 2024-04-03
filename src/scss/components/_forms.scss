@@ -15,14 +15,24 @@
 
   .profile-img {
     flex: none;
-    width: 125px;
+    width: 100px;
     height: auto;
     border: none;
-    border-radius: 0;
+    border-radius: 8px;
+    margin: 0 0 12px 3px;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.8);
   }
 
   .header-fields {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 0;
+  }
+
+  .name-and-level {
+    margin-bottom: 5px;
   }
 
   .charname {
@@ -49,8 +59,8 @@
 
   .level {
     position: absolute;
-    left: 91px;
-    top: 91px;
+    left: 2px;
+    top: 90px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -58,8 +68,10 @@
     margin: 0;
     padding: 0;
     border: none;
-    border: 1px solid black;
+    border: none;
     background: none;
+    width: 100px;
+    filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.8));
 
     input {
       width: 32px;
@@ -67,10 +79,13 @@
       line-height: 32px;
       font-size: 1.7em;
       font-weight: bolder;
-      background: white;
+      background: none;
       border: none;
       text-align: center;
       border-radius: 0;
+      color: white;
+      width: 100%;
+      @include stroke(black, 1px)
     }
   }
 
@@ -78,15 +93,23 @@
 
 .sheet-tabs {
   flex: 0;
-  border-top: 0 !important;
-  margin-top: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  background-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.8);
 }
 
 .sheet-body {
-  height: 343px;
+  height: 258px;
 }
 
 .sheet-body .tab {
+  position: relative;
   height: 100%;
   overflow-y: auto;
 }
@@ -103,4 +126,8 @@
   .tox-edit-area {
     padding: 0 8px;
   }
+}
+
+.editor-content {
+  padding: 5px;
 }

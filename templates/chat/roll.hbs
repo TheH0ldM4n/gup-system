@@ -1,0 +1,19 @@
+<div class="roll-result {{critical}}">
+    <p class="flavor">
+        {{#if imgSrc}}
+        <img src="{{imgSrc}}" class="inline-img" />
+        {{/if}}
+        {{#if flavor}}
+        <span class="roll-flavor">{{flavor}}</span>
+        {{/if}}
+    </p>
+    <hr>
+    <div class="dice-tooltip">
+        <div class="dice-rolls">
+            {{#each results as |result|}}
+            <span class="roll die not-dice">{{result.value}}</span>
+            {{/each}}
+            <span class="roll die not-dice">= {{total}}</span>
+        </div>
+    </div>
+</div>

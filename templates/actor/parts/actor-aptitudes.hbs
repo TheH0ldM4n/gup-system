@@ -1,0 +1,18 @@
+<div class="aptitudes">
+    {{#each system.aptitudes as |aptitude key|}}
+        <div class="aptitude">
+        <img 
+            src="systems/debilus/assets/{{key}}.svg" 
+            for="system.aptitudes.{{key}}.value" 
+            class="rollable"
+            title="{{aptitude.label}}" 
+            data-roll="{{aptitude.value}}" 
+            data-label="{{aptitude.label}}" 
+            data-type="aptitude"
+            data-img="systems/debilus/assets/{{key}}.svg"
+        />
+        <span class="label">{{aptitude.label}}</span>
+        <input class="value" type="text" name="system.aptitudes.{{key}}.value" value="{{aptitude.value}}" data-dtype="Number" disabled />
+        </div>
+    {{/each}}
+</div>

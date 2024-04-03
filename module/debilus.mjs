@@ -20,6 +20,7 @@ Hooks.once('init', function () {
     DebilusItem,
     rollItemMacro,
   };
+  
 
   // Add custom constants for configuration.
   CONFIG.DEBILUS = DEBILUS;
@@ -29,7 +30,8 @@ Hooks.once('init', function () {
    * @type {String}
    */
   CONFIG.Combat.initiative = {
-    formula: '@attributes.initiative.value',
+    // 1d20 + agilite
+    formula: '1d20 + @agilite.value',
     decimals: 0,
   };
 
@@ -54,8 +56,155 @@ Hooks.once('init', function () {
     label: 'DEBILUS.SheetLabels.Item',
   });
 
+  // Register system settings
+  game.settings.register('debilus', 'setting', {
+    name: 'DEBILUS.Settings.Labels.Setting',
+    hint: 'DEBILUS.Settings.Hints.Setting',
+    scope: 'world',
+    config: true,
+    type: String,
+    choices: {
+      fantasy: 'DEBILUS.Settings.Setting.Fantasy',
+      scifi: 'DEBILUS.Settings.Setting.SciFi',
+      modern: 'DEBILUS.Settings.Setting.Modern',
+      wow: 'DEBILUS.Settings.Setting.WoW',
+      starwars: 'DEBILUS.Settings.Setting.StarWars',
+    },
+    default: 'fantasy',
+  });
+
   // Preload Handlebars templates.
   return preloadHandlebarsTemplates();
+});
+
+
+/* -------------------------------------------- */
+/*  Combat Hooks                                */
+/* -------------------------------------------- */
+
+// // On combat start, reset all actors' actions to their max value & reset cooldowns
+// Hooks.on("combatStart", async (combat, options, userId) => {
+//   console.error("combatStart");
+//   await resetActionsAndCooldowns();
+// });
+
+// On combat end, reset all actors' actions to their max value & reset cooldowns
+Hooks.on("combatEnd", async (combat, options, userId) => {
+  console.error("combatEnd");
+  await resetActionsAndCooldowns();
+});
+
+
+Hooks.on("updateCombat", async (combat, changed, options, userId) => {
+  // DO only if the user is the GM
+  if (game.user.isGM) {
+    // Check if the change includes a new round starting, but not when round has decreased
+    if (changed.hasOwnProperty("round") && combat.previous.round < combat.round) {
+      // If first round, reset actions and cooldowns
+      if (combat.round === 1) {
+        await resetActionsAndCooldowns();
+      } else {
+        // Loop through all actors
+        for (const actor of game.actors) {
+          // Update cooldowns for all competences
+          await updateCompetencesCooldowns(actor);
+          // Check if the actions.max exists for this actor
+          if (actor.system.attributes.actions?.max !== undefined) {
+            // Set actions.value equal to actions.max
+            await actor.update({"system.attributes.actions.value": actor.system.attributes.actions.max})
+              .then(() => {
+                // Refresh the actor's sheet, if it is open
+                if (actor.sheet.rendered) {
+                  actor.sheet.render(true);
+                }
+              });
+          }
+        }
+      }
+    }
+  }
+});
+
+async function resetActionsAndCooldowns() {
+  // Do nothing if the user is the GM
+  if (game.user.isGM) {
+    for (const actor of game.actors) {
+      // Update cooldowns for all competences
+      await resetCompetencesCooldowns(actor);
+      // Check if the actions.max exists for this actor
+      if (actor.system.attributes.actions?.max !== undefined) {
+        // Set actions.value equal to actions.max
+        await actor.update({
+          "system.attributes.actions.value": actor.system.attributes.actions.max
+        }).then(() => {
+          // Refresh the actor's sheet, if it is open
+          if (actor.sheet.rendered) {
+            actor.sheet.render(true);
+          }
+        });
+      }
+    }
+  }
+}
+
+
+async function updateCompetencesCooldowns(actor) {
+  const competences = actor.items.filter((item) => item.type === "competence");
+  for (const competence of competences) {
+    const cooldown = competence.system.cooldown;
+    if (cooldown.value > 0 && cooldown.remaining) {
+      await competence.update({"system.cooldown.remaining": cooldown.remaining - 1});
+    }
+  }
+}
+
+async function resetCompetencesCooldowns(actor) {
+  const competences = actor.items.filter((item) => item.type === "competence");
+  for (const competence of competences) {
+    await competence.update({"system.cooldown.remaining": 0});
+  }
+}
+
+/* -------------------------------------------- */
+/*  Token HUD Hook                              */
+/* -------------------------------------------- */
+Hooks.on('renderTokenHUD', (app, html, data) => {
+
+  // Add reset actions counter button
+  let resetActionsButton = $('<div class="control-icon"><i class="fas fa-redo" title="Réinitialiser les actions" color="teal"></i></div>');
+
+  resetActionsButton.on('click', (event) => {
+    const actor = game.actors.get(data.actorId);
+    actor.update({"system.attributes.actions.value": actor.system.attributes.actions.max});
+    // Send chat message
+    ChatMessage.create({
+      user: game.user._id,
+      speaker: ChatMessage.getSpeaker({ actor: actor }),
+      content: actor.name + " a réinitialisé ses actions."
+    });
+  });
+
+  html.find('.middle').prepend(resetActionsButton);
+
+  // If there is an active combat, add movement action button
+  if (!game.combat) return;
+  let newButton = $('<div class="control-icon"><i class="fas fa-person-walking" title="Consommer une action de déplacement"></i></div>');
+  newButton.on('click', (event) => {
+    const actor = game.actors.get(data.actorId);
+    if(actor.system.attributes.actions.value > 0) {
+      actor.update({"system.attributes.actions.value": actor.system.attributes.actions.value - 1});
+      ChatMessage.create({
+        user: game.user._id,
+        speaker: ChatMessage.getSpeaker({ actor: actor }),
+        content: actor.name + " a consommé une action de déplacement."
+      });
+    } else {
+      ui.notifications.error("Vous n'avez plus d'actions disponibles.");
+    }
+  });
+
+  // Append your new button to the HUD. Adjust the selector as needed.
+  html.find('.right').append(newButton);
 });
 
 /* -------------------------------------------- */
@@ -67,6 +216,26 @@ Handlebars.registerHelper('toLowerCase', function (str) {
   return str.toLowerCase();
 });
 
+Handlebars.registerHelper('equal', function(lvalue, rvalue, options) {
+  if (arguments.length < 3)
+      throw new Error("Handlebars Helper equal needs 2 parameters");
+  if( lvalue!=rvalue ) {
+      return options.inverse(this);
+  } else {
+      return options.fn(this);
+  }
+});
+
+// Helper that converts every special character to its HTML entity
+Handlebars.registerHelper('htmlEntities', function(str) {
+
+  console.log("STRING", str);
+
+  return str.replace(/[\u00A0-\u9999<>\&]/gim, function(i) {
+    return '&#'+i.charCodeAt(0)+';';
+  });
+});
+
 /* -------------------------------------------- */
 /*  Ready Hook                                  */
 /* -------------------------------------------- */
@@ -75,6 +244,21 @@ Hooks.once('ready', function () {
   // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
   Hooks.on('hotbarDrop', (bar, data, slot) => createItemMacro(data, slot));
 });
+
+// socketlib
+Hooks.once('socketlib.ready', () => {
+  console.log('Registering socketlib system for debilus.');
+  DEBILUS.socket = socketlib.registerSystem('debilus');
+  DEBILUS.socket.register("sendSoundToPlayer", sendSoundToPlayer);
+
+  console.log('DEBILUS.socket', DEBILUS.socket);
+});
+
+function sendSoundToPlayer(soundPath, targetUserId) {
+  if( targetUserId === game.userId ) {
+    AudioHelper.play({src: soundPath, volume: 0.8, autoplay: true, loop: false}, true);
+  }
+}
 
 /* -------------------------------------------- */
 /*  Hotbar Macros                               */

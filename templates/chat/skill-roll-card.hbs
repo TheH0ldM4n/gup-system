@@ -1,0 +1,83 @@
+<div class="roll-result {{class}}" style="margin-bottom: 5px;">
+
+    {{#if type}}
+        <p class="roll-type">{{localize type}}</p>
+        <hr>
+    {{/if}}
+
+    <p class="flavor">
+        {{#if actorImg}}
+        <img src="{{actorImg}}" class="inline-img" />
+        {{/if}}
+        {{#if label}}
+        <span class="roll-flavor">{{label}}</span>
+        {{/if}}
+        {{#if img}}
+        <img src="{{img}}" class="inline-img" />
+        {{/if}}
+    </p>
+
+    {{#if (eq actions -1)}}
+        <hr>
+        <div class="details">
+            <div class="detail" style="width: 100%;">
+                <span style="border:none !important;">Compétence passive</span>
+            </div>
+        </div>
+    {{/if}}
+
+    {{#if hasDetails}}
+        <hr>
+        <div class="details">
+
+            {{#if hasActions}}
+                <div class="detail">
+                    <span>Actions</span>
+                    <span>{{actions}}</span>
+                </div>
+            {{/if}}
+            
+            {{#if hasRollType}}
+                <div class="detail">
+                    <span>Jet</span>
+                    <span>{{localize rollType}}</span>
+                </div>
+            {{/if}}
+
+            {{#if hasValue}}
+                <div class="detail">
+                    <span>{{localize valueType}}</span>
+                    <span>{{value}}</span>
+                </div>
+            {{/if}}
+        </div>
+    {{/if}}
+
+    {{#if hasDescription}}
+    <hr>
+    {{{description}}}
+    {{/if}}
+
+    {{#if isCritical}}
+    <hr>
+    <h2>
+        <b>
+            <i class="fas fa-check-double"></i>
+            {{localize "DEBILUS.roll.critical"}}
+            <i class="fas fa-check-double"></i>
+        </b>
+    </h2>
+    {{else}}
+    {{#if isFumble}}
+    <hr>
+    <h2>
+        <b>
+            <i class="fas fa-skull-crossbones"></i>
+            {{localize "DEBILUS.roll.fumble"}}
+            <i class="fas fa-skull-crossbones"></i>
+        </b>
+    </h2>
+    {{/if}}
+    {{/if}}
+
+</div>

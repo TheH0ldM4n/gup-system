@@ -1,35 +1,117 @@
-<form class="{{cssClass}}" autocomplete="off">
-  <header class="sheet-header">
-    <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
+<form class="{{cssClass}} debilus-sheet" autocomplete="off">
+
+  <header class="sheet-header" style="align-items: start;">
+
+    <img class="item-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="150" width="100" style="margin: 0;" />
+
     <div class="header-fields">
-      <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
+
+        <div class="itemname">
+            <input name="name" type="text" value="{{item.name}}" placeholder="Name" />
+        </div>
+
+      <div class="choices">
+
+        <div class="choice-block">
+          <label class="actions-label">Actions</label>
+          <input name="system.actions" type="text" value="{{system.actions}}" placeholder="Actions" data-dtype="Number" />
+        </div>
+
+        {{#if (gt system.actions -1)}}
+          <div class="choice-block">
+            <label class="cooldown-label">Délai</label>
+            <input name="system.cooldown.value" type="text" value="{{system.cooldown.value}}" placeholder="Cooldown" data-dtype="Number" />
+          </div>
+
+          <div class="choice-block">
+            <label class="resource-label">Jet</label>
+            <select name="system.rollType" data-dtype="String">
+              {{#select system.rollType}}
+                <option value="none">Aucun</option>
+                <option value="ability">Caractéristique</option>
+                <option value="aptitude">Aptitude</option>
+              {{/select}}
+            </select>
+          </div>
+        {{/if}}
+
+        {{#if (eq system.rollType "ability")}}
+          <div class="choice-block">
+            <label class="ability-label">Carac.</label>
+            <select name="system.rollAbility" data-dtype="String">
+              {{#select system.rollAbility}}
+                <option value="force">Force</option>
+                <option value="agilite">Agilité</option>
+                <option value="corps">Corps</option>
+                <option value="esprit">Esprit</option>
+                <option value="charisme">Charisme</option>
+              {{/select}}
+            </select>
+          </div>
+        {{/if}}
+
+        {{#if (eq system.rollType "aptitude")}}
+          <div class="choice-block">
+            <label class="aptitude-label">Aptitude</label>
+            <select name="system.rollAptitude" data-dtype="String">
+              {{#select system.rollAptitude}}
+                <option value="esquive">Esquive</option>
+                <option value="melee">Mélée</option>
+                <option value="tir">Tir</option>
+                <option value="furtivite">Furtivité</option>
+                <option value="perception">Perception</option>
+                <option value="savoir">Savoir</option>
+                <option value="social">Social</option>
+                <option value="magie">Magie</option>
+              {{/select}}
+            </select>
+          </div>
+        {{/if}}
+
+        <div class="choice-block">
+          <label class="valueType-label">Type</label>
+          </select>
+          <select name="system.valueType" data-dtype="String">
+            {{#select system.valueType}}
+              <option value="none">Aucun</option>
+              <option value="damage">Dégâts</option>
+              <option value="heal">Soins</option>
+              <option value="bonus">Bonus</option>
+            {{/select}}
+          </select>
+        </div>
+
+        {{#if (eq system.valueType "bonus")}}
+          <div class="choice-block">
+            <label class="value-label">Valeur</label>
+            <input name="system.value" type="text" value="{{system.value}}" placeholder="Valeur" data-dtype="Number" />
+          </div>
+          <div class="choice-block">
+            <label class="value-label">Identifiant</label>
+            <input name="system.valueId" type="text" value="{{system.bonusValueIdentifier}}" placeholder="Identifiant" data-dtype="String" />
+          </div>
+        {{/if}}
+
+        {{#if (eq system.valueType "damage")}}
+          <div class="choice-block">
+            <label class="value-label">Valeur</label>
+            <input name="system.value" type="text" value="{{system.value}}" placeholder="Valeur" data-dtype="Number" />
+          </div>
+        {{/if}}
+
+        {{#if (eq system.valueType "heal")}}
+          <div class="choice-block">
+            <label class="value-label">Valeur</label>
+            <input name="system.value" type="text" value="{{system.value}}" placeholder="Valeur" data-dtype="Number" />
+          </div>
+        {{/if}}
+
     </div>
   </header>
-
-  {{!-- Sheet Tab Navigation --}}
-  <nav class="sheet-tabs tabs" data-group="primary">
-    <a class="item" data-tab="description">Description</a>
-    <a class="item" data-tab="attributes">Attributes</a>
-    <a class="item" data-tab="effects">Effects</a>
-  </nav>
-
   {{!-- Sheet Body --}}
-  <section class="sheet-body">
-
-    {{!-- Description Tab --}}
-    <div class="tab" data-group="primary" data-tab="description">
-      {{editor system.description target="system.description" rollData=rollData button=true owner=owner editable=editable}}
-    </div>
-
-    {{!-- Attributes Tab --}}
-    <div class="tab attributes" data-group="primary" data-tab="attributes">
-      {{!-- As you add new fields, add them in here! --}}
-    </div>
-
-    {{!-- Effects Tab --}}
-    <div class="tab effects" data-group="primary" data-tab="effects">
-      {{> "systems/debilus/templates/item/parts/item-effects.hbs"}}
-    </div>
+  <section class="itemdesc">
+    {{!-- <textarea name="system.description" data-dtype="String">{{system.description}}</textarea> --}}
+    {{editor system.description target="system.description" rollData=rollData button=true owner=owner editable=editable}}
   </section>
 
 </form>

@@ -1,7 +1,10 @@
 import {
   onManageActiveEffect,
   prepareActiveEffectCategories,
-} from '../helpers/effects.mjs';
+} from "../helpers/effects.mjs";
+
+import { SkillRoll } from "../controllers/skill-roll.mjs";
+import { ItemRoll } from "../controllers/item-roll.mjs";
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -11,15 +14,15 @@ export class DebilusActorSheet extends ActorSheet {
   /** @override */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ['debilus', 'sheet', 'actor'],
-      width: 450,
-      height: 600,
+      classes: ["debilus", "sheet", "actor"],
+      width: 500,
+      height: 500,
       resizable: false,
       tabs: [
         {
-          navSelector: '.sheet-tabs',
-          contentSelector: '.sheet-body',
-          initial: 'aptitudes',
+          navSelector: ".sheet-tabs",
+          contentSelector: ".sheet-body",
+          initial: "aptitudes",
         },
       ],
     });
@@ -48,13 +51,13 @@ export class DebilusActorSheet extends ActorSheet {
     context.flags = actorData.flags;
 
     // Prepare character data and items.
-    if (actorData.type == 'character') {
+    if (actorData.type == "character") {
       this._prepareItems(context);
       this._prepareCharacterData(context);
     }
 
     // Prepare NPC data and items.
-    if (actorData.type == 'npc') {
+    if (actorData.type == "npc") {
       this._prepareItems(context);
     }
 
@@ -83,6 +86,11 @@ export class DebilusActorSheet extends ActorSheet {
     for (let [k, v] of Object.entries(context.system.abilities)) {
       v.label = game.i18n.localize(CONFIG.DEBILUS.abilities[k]) ?? k;
     }
+
+    // Same for aptitudes
+    for (let [k, v] of Object.entries(context.system.aptitudes)) {
+      v.label = game.i18n.localize(CONFIG.DEBILUS.aptitudes[k]) ?? k;
+    }
   }
 
   /**
@@ -102,16 +110,16 @@ export class DebilusActorSheet extends ActorSheet {
     for (let i of context.items) {
       i.img = i.img || Item.DEFAULT_ICON;
       // Append to gear.
-      if (i.type === 'item') {
+      if (i.type === "item") {
         gear.push(i);
       }
       // Append to aptitudes.
-      else if (i.type === 'aptitude') {
+      else if (i.type === "aptitude") {
         aptitudes.push(i);
       }
       // Append to competences.
-      else if (i.type === 'competence') {
-          competences.push(i);
+      else if (i.type === "competence") {
+        competences.push(i);
       }
     }
 
@@ -128,10 +136,22 @@ export class DebilusActorSheet extends ActorSheet {
     super.activateListeners(html);
 
     // Render the item sheet for viewing/editing prior to the editable check.
-    html.on('click', '.item-edit', (ev) => {
-      const li = $(ev.currentTarget).parents('.item');
-      const item = this.actor.items.get(li.data('itemId'));
+    html.on("click", ".item-edit", (ev) => {
+      const li = $(ev.currentTarget).parents(".item");
+      const item = this.actor.items.get(li.data("itemId"));
       item.sheet.render(true);
+    });
+
+    html.on("click", ".item-quantity-increase", (ev) => {
+      const li = $(ev.currentTarget).parents(".item");
+      const item = this.actor.items.get(li.data("itemId"));
+      item.increaseQuantity();
+    });
+
+    html.on("click", ".item-quantity-decrease", (ev) => {
+      const li = $(ev.currentTarget).parents(".item");
+      const item = this.actor.items.get(li.data("itemId"));
+      item.decreaseQuantity();
     });
 
     // -------------------------------------------------------------
@@ -139,19 +159,19 @@ export class DebilusActorSheet extends ActorSheet {
     if (!this.isEditable) return;
 
     // Add Inventory Item
-    html.on('click', '.item-create', this._onItemCreate.bind(this));
+    html.on("click", ".item-create", this._onItemCreate.bind(this));
 
     // Delete Inventory Item
-    html.on('click', '.item-delete', (ev) => {
-      const li = $(ev.currentTarget).parents('.item');
-      const item = this.actor.items.get(li.data('itemId'));
+    html.on("click", ".item-delete", (ev) => {
+      const li = $(ev.currentTarget).parents(".item");
+      const item = this.actor.items.get(li.data("itemId"));
       item.delete();
       li.slideUp(200, () => this.render(false));
     });
 
     // Active Effect management
-    html.on('click', '.effect-control', (ev) => {
-      const row = ev.currentTarget.closest('li');
+    html.on("click", ".effect-control", (ev) => {
+      const row = ev.currentTarget.closest("li");
       const document =
         row.dataset.parentId === this.actor.id
           ? this.actor
@@ -160,15 +180,15 @@ export class DebilusActorSheet extends ActorSheet {
     });
 
     // Rollable abilities.
-    html.on('click', '.rollable', this._onRoll.bind(this));
+    html.on("click", ".rollable", this._onRoll.bind(this));
 
     // Drag events for macros.
     if (this.actor.isOwner) {
       let handler = (ev) => this._onDragStart(ev);
-      html.find('li.item').each((i, li) => {
-        if (li.classList.contains('inventory-header')) return;
-        li.setAttribute('draggable', true);
-        li.addEventListener('dragstart', handler, false);
+      html.find("li.item").each((i, li) => {
+        if (li.classList.contains("inventory-header")) return;
+        li.setAttribute("draggable", true);
+        li.addEventListener("dragstart", handler, false);
       });
     }
   }
@@ -194,7 +214,7 @@ export class DebilusActorSheet extends ActorSheet {
       system: data,
     };
     // Remove the type from the dataset since it's in the itemData.type prop.
-    delete itemData.system['type'];
+    delete itemData.system["type"];
 
     // Finally, create the item!
     return await Item.create(itemData, { parent: this.actor });
@@ -209,26 +229,216 @@ export class DebilusActorSheet extends ActorSheet {
     event.preventDefault();
     const element = event.currentTarget;
     const dataset = element.dataset;
+    let consumeItem = "";
+    let useActions = "";
+    let valueBonusForm = "";
+    let rollBonusMalusForm = `<div class="form-group">
+                            <label>Bonus/Malus jet</label>
+                            <input type="number" name="bonusMalus" value="" autofocus>
+                          </div>`;
 
-    // Handle item rolls.
-    if (dataset.rollType) {
-      if (dataset.rollType == 'item') {
-        const itemId = element.closest('.item').dataset.itemId;
-        const item = this.actor.items.get(itemId);
-        if (item) return item.roll();
+    // Check if there is an active encounter
+    const activeEncounter = game.combats.active;
+
+    if (dataset.rollType === "item") {
+      const itemId = element.closest(".item").dataset.itemId;
+      this._item = this.actor.items.get(itemId);
+
+      if (this._item.system.rollType === "none") {
+        rollBonusMalusForm = "";
       }
+
+      if(this._item.type === "item") {
+        consumeItem = `<div class="form-group">
+                          <label>Consommer l'objet</label>
+                          <input type="checkbox" name="consumeItem" value="1">
+                        </div>`;
+      }
+
+      if(this._item.system.actions > 0) {
+        useActions = `<div class="form-group">
+                        <label>Consommer les actions</label>
+                        <input type="checkbox" name="useActions" value="1" ${activeEncounter ? "checked" : "disabled"}>
+                      </div>`;
+      }
+
+      if (this._item.system.valueType !== "none") {
+        const valueLabel = this._item.system.valueType === "damage" ? "dégâts" : "soins";
+        valueBonusForm = `<div class="form-group">
+                            <label>Bonus/Malus de ${valueLabel}</label>
+                            <input type="number" name="valueBonusMalus" value="" autofocus>
+                          </div>`;
+      }
+
     }
 
-    // Handle rolls that supply the formula directly.
-    if (dataset.roll) {
-      let label = dataset.label ? `[ability] ${dataset.label}` : '';
-      let roll = new Roll(dataset.roll, this.actor.getRollData());
-      roll.toMessage({
-        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-        flavor: label,
-        rollMode: game.settings.get('core', 'rollMode'),
-      });
-      return roll;
+    // If none of the above, we're dealing with a basic roll.
+    if(rollBonusMalusForm === "" && valueBonusForm === "" && consumeItem === "" && useActions === "") {
+      return this.composeItemRoll(this._item);
     }
+
+    let dialog = new Dialog({
+      title: "Paramètres du jet de dé",
+      content: `<form>
+                  ${rollBonusMalusForm}
+                  ${valueBonusForm}
+                  ${consumeItem}
+                  ${useActions}
+                </form>`,
+      buttons: {
+        ok: {
+          icon: '<i class="fas fa-check"></i>',
+          label: "OK",
+          callback: (html) => {
+            if (rollBonusMalusForm) {
+              this._bonusMalus = parseInt(html.find('[name="bonusMalus"]')[0].value || 0);
+            }
+            if(valueBonusForm) {
+              this._valueBonusMalus = parseInt(html.find('[name="valueBonusMalus"]')[0].value || 0);
+            }
+            if(consumeItem) {
+              this._consumeItem = html.find('[name="consumeItem"]')[0].checked;
+            }
+            if(useActions) {
+              this._useActions = html.find('[name="useActions"]')[0].checked;
+            }
+
+            // Handle item rolls.
+            if (dataset.rollType) {
+                if (this._item) {
+
+                  // Check if the item is consumable
+                  if(this._consumeItem) {
+                    if(this._item.system.quantity <= 0) {
+                      ui.notifications.error("Objet épuisé.");
+                      return;
+                    }
+                    this._item.update({ "system.quantity": this._item.system.quantity - 1 });
+                  }
+
+                  // Check if the actor has enough actions
+                  if(this._useActions) {
+                    if(this.actor.system.attributes.actions.value - this._item.system.actions < 0) {
+                      ui.notifications.error("Vous n'avez pas assez d'actions pour effectuer ceci.");
+                      return;
+                    }
+                    this.actor.update({ "system.attributes.actions.value": this.actor.system.attributes.actions.value - this._item.system.actions });
+                  }
+
+                  // Check if cooldown is < 1
+                  console.log("ITEM", this._item);
+                  if(this._item.type === "competence" && this._item.system.cooldown.value > 0 && this._item.system.cooldown.remaining > 0 && activeEncounter) {
+                    let turns = this._item.system.cooldown.remaining > 1 ? "tours" : "tour";
+                    ui.notifications.error("Vous devez encore attendre " + this._item.system.cooldown.remaining + " " + turns + " avant de pouvoir réutiliser cette compétence.");
+                    return;
+                  } else if (this._item.type === "competence" && this._item.system.cooldown.value > 0 && activeEncounter) {
+                    this._item.update({ "system.cooldown.remaining": this._item.system.cooldown.value });
+                  }
+                  
+                  return this.composeItemRoll(this._item);
+                }
+            }
+
+            // Handle rolls that supply the formula directly.
+            if (dataset.roll) {
+              this.composeRoll(dataset);
+            }
+          },
+        },
+        cancel: {
+          icon: '<i class="fas fa-times"></i>',
+          label: "Cancel",
+        },
+      },
+      default: "ok",
+    });
+
+    return dialog.render(true);
   }
+
+  /**
+   * Compose dataset roll
+   */
+  async composeRoll(dataset) {
+    // Fixed
+    const formula = '1d20';
+    const bonusMalus = this._bonusMalus;
+    const critRange = "20";
+    const type = dataset.type;
+
+    // Use either "de" or "d'" if first letter is a vowel (lowercase or uppercase)
+    let liaison = ("aeiouy".includes(dataset.label.charAt(0).toLowerCase())) ? "d'" : "de ";
+
+    const label = this.actor.name + " effectue un test " + liaison + dataset.label;
+    const mod = '+' + dataset.roll;
+    const img = dataset.img;
+
+    let r = new SkillRoll(
+      label,
+      img,
+      formula,
+      mod,
+      bonusMalus,
+      critRange,
+      null,
+      type
+    );
+
+    return r.roll(this.actor);
+  }
+
+  /**
+   * Compose item roll
+   */
+  async composeItemRoll(item) {
+    const formula = '1d20';
+    const bonusMalus = this._bonusMalus || 0;
+    const critRange = "20";
+    let mod = 0;
+    let noRoll = false;
+
+    const type = item.type;
+    const label = this.actor.name + " utilise " + item.name;
+    const img = item.img;
+    const description = item.system.description;
+    const actions = item.system.actions;
+    const value = item.system.value;
+    const valueType = item.system.valueType;
+    if (item.system.rollType === "ability") {
+      var rollType = item.system.rollAbility;
+    } else if (item.system.rollType === "aptitude") {
+      var rollType = item.system.rollAptitude;
+    } else {
+      var rollType = null;
+    }
+
+    if (item.system.rollType === "ability") {
+      mod = '+' + this.actor.system.abilities[item.system.rollAbility].value;
+    } else if (item.system.rollType === "aptitude") {
+      mod = '+' + this.actor.system.aptitudes[item.system.rollAptitude].value;
+    } else {
+      mod = null;
+      noRoll = true;
+    }
+
+    let r = new ItemRoll(
+      label,
+      img,
+      formula,
+      mod,
+      bonusMalus,
+      critRange,
+      description,
+      noRoll,
+      actions,
+      value,
+      valueType,
+      rollType,
+      type,
+      this._valueBonusMalus
+    );
+
+    return r.roll(this.actor);
+  }
+
 }
