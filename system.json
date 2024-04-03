@@ -18,7 +18,7 @@
       "thumbnail": "systems/debilus/assets/debilus.jpg"
     }
   ],
-  "version": "0.0.0",
+  "version": "0.0.2",
   "compatibility": {
     "minimum": 11,
     "verified": "11.315"
@@ -45,5 +45,7 @@
   "gridDistance": 1.5,
   "gridUnits": "m",
   "primaryTokenAttribute": "pv",
-  "secondaryTokenAttribute": "actions"
+  "secondaryTokenAttribute": "actions",
+  "manifest": "https://gitlab.com/taverne-des-rolistes/foundry/debilus/-/raw/master/system.json",
+  "download": "https://gitlab.com/taverne-des-rolistes/foundry/debilus/-/archive/master/debilus-master.zip"
 }
