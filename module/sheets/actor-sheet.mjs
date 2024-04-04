@@ -11,6 +11,13 @@ import { ItemRoll } from "../controllers/item-roll.mjs";
  * @extends {ActorSheet}
  */
 export class DebilusActorSheet extends ActorSheet {
+
+  constructor(...args) {
+    super(...args);
+
+    this._gameSetting = game.settings.get('debilus', 'setting');
+  }
+
   /** @override */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
@@ -49,6 +56,12 @@ export class DebilusActorSheet extends ActorSheet {
     // Add the actor's data to context.data for easier access, as well as flags.
     context.system = actorData.system;
     context.flags = actorData.flags;
+
+    // add the game setting to the context
+    context.gameSetting = this._gameSetting;
+
+    console.log('context', context);
+    console.log("gameSetting", this._gameSetting);
 
     // Prepare character data and items.
     if (actorData.type == "character") {
@@ -366,10 +379,14 @@ export class DebilusActorSheet extends ActorSheet {
     const critRange = "20";
     const type = dataset.type;
 
-    // Use either "de" or "d'" if first letter is a vowel (lowercase or uppercase)
-    let liaison = ("aeiouy".includes(dataset.label.charAt(0).toLowerCase())) ? "d'" : "de ";
+    // Check if the label is localized
+    const labelKey = this._gameSetting + '.' + dataset.type + '.' + dataset.key;
+    let keyTrans = game.i18n.localize(labelKey) ?? dataset.key;
 
-    const label = this.actor.name + " effectue un test " + liaison + dataset.label;
+    // Use either "de" or "d'" if first letter is a vowel (lowercase or uppercase)
+    let liaison = ("aeiouy".includes(keyTrans.charAt(0).toLowerCase())) ? "d'" : "de ";
+
+    const label = this.actor.name + " effectue un test " + liaison + keyTrans;
     const mod = '+' + dataset.roll;
     const img = dataset.img;
 
@@ -404,10 +421,11 @@ export class DebilusActorSheet extends ActorSheet {
     const actions = item.system.actions;
     const value = item.system.value;
     const valueType = item.system.valueType;
+
     if (item.system.rollType === "ability") {
-      var rollType = item.system.rollAbility;
+      var rollType = this._gameSetting + '.ability.' + item.system.rollAbility;
     } else if (item.system.rollType === "aptitude") {
-      var rollType = item.system.rollAptitude;
+      var rollType = this._gameSetting + '.aptitude.' + item.system.rollAptitude;
     } else {
       var rollType = null;
     }

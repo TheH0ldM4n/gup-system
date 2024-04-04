@@ -1,4 +1,4 @@
-<form class="{{cssClass}} {{actor.type}} debilus-sheet" autocomplete="off">
+<form class="{{cssClass}} {{actor.type}} debilus-sheet {{gameSetting}}" autocomplete="off">
 
   {{!-- Sheet Header --}}
   <header class="sheet-header">
@@ -11,15 +11,14 @@
     
     <div class="header-fields">
 
-
       <div class="name-and-level">
         <div class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name" /></div>
       </div>
 
       <div class="caracs attributes">
         <div>
-          <div class="progress-container">
-              <img class="icon" src="systems/debilus/assets/pv.svg" />
+          <div class="progress-container pv">
+              <img class="icon" src="systems/debilus/assets/{{gameSetting}}/pv.svg" />
               <span class="max">Max : {{system.pv.max}}</span>
             <div class="val">
               <input type="text" name="system.pv.value" value="{{system.pv.value}}" data-dtype="Number"/>
@@ -32,13 +31,13 @@
             </svg>
           </div>
         </div>
-        <div class="carac" style="height: 70px;">
-          <img src="systems/debilus/assets/defense.svg" title="Défense" />
+        <div class="carac defense" style="height: 70px;">
+          <img src="systems/debilus/assets/{{gameSetting}}/defense.svg" title="Défense" />
           <span class="defense-value">{{system.attributes.defense.value}}</span>
         </div>
         <div>
           <div class="progress-container">
-            <img class="icon" src="systems/debilus/assets/actions.svg" />
+            <img class="icon" src="systems/debilus/assets/{{gameSetting}}/actions.svg" />
             <span class="max">Max : {{system.attributes.actions.max}}</span>
             <div class="val">
               <input type="text" name="system.attributes.actions.value" value="{{system.attributes.actions.value}}" data-dtype="Number"/>
@@ -59,14 +58,15 @@
     {{#each system.abilities as |ability key|}}
       <div class="carac">
         <img 
-          src="systems/debilus/assets/{{key}}.svg" 
+          src="systems/debilus/assets/{{../gameSetting}}/{{key}}.svg" 
           for="system.abilities.{{key}}.value" 
           class="rollable"
-          title="{{ability.label}}" 
+          title="{{localize (concat ../gameSetting ".ability." key)}}""
           data-roll="{{ability.value}}" 
+          data-key="{{key}}"
           data-label="{{ability.label}}" 
           data-type="ability"
-          data-img="systems/debilus/assets/{{key}}.svg"
+          data-img="systems/debilus/assets/{{../gameSetting}}/{{key}}.svg"
         />
         <input class="value" type="text" name="system.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number" />
       </div>

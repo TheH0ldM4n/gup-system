@@ -17,6 +17,12 @@ input {
     padding: 0;
     height: 100%;
 
+    .starwars & {
+        justify-content: space-between;
+        padding: 0 2px;
+        height: 99%;
+    }
+
     .aptitude {
         width: 45%;
         display: flex;
@@ -27,6 +33,18 @@ input {
         border-radius: 5px;
         overflow: hidden;
         background-color: rgba(255, 255, 255, 0.5);
+
+        .starwars & {
+            width: calc(50% - 3px);
+            background-color: black;
+            color: white !important;
+            @include neon-box;
+
+            img {
+                margin: 2px;
+            }
+
+        }
 
         img {
             width: 44px;
@@ -60,7 +78,7 @@ input {
 }
 
 .caracs {
-    width: 100%;
+    width: auto;
     display: flex;
     justify-content: space-evenly;
     flex-direction: row;
@@ -69,6 +87,31 @@ input {
     padding: 5px 0 3px 0;
     position: relative;
     background-color: rgba(255, 255, 255, 0.5);
+
+    .starwars & {
+        background-color: black;
+
+        // Apply the neon effect if not class "attributes"
+        &:not(.attributes) {
+            margin: 0 3px;
+            @include neon-box;
+        }
+
+        .carac {
+            &:not(.defense) {
+                img {
+                    @include neon-drop($neon-default, 2px);
+                }
+            }
+
+            &.defense {
+                img {
+                    @include neon-drop(#ffff00, 2px);
+                }
+            }
+        }
+
+    }
 
     &.attributes {
         background: none;
@@ -275,6 +318,35 @@ input {
     position: relative;
     filter: drop-shadow(0px 0px 3px rgba(0, 0, 0, 1));
 
+    .starwars & {
+        @include neon-drop(#00ffff);
+
+        .progress-ring__circle-background {
+            stroke: #000;
+        }
+
+        .progress-ring__circle {
+            stroke: rgb(0, 180, 180);
+        }
+
+        .icon {
+            @include neon-drop(#00ffff, 2px);
+        }
+
+        &.pv {
+            @include neon-drop(red);
+
+            .progress-ring__circle {
+                stroke: rgb(180, 0, 0);
+            }
+
+            .icon {
+                @include neon-drop(red, 2px);
+            }
+        }
+
+    }
+
     .icon {
         position: absolute;
         left: 15px;
@@ -285,6 +357,7 @@ input {
         height: 40px !important;
         border: none;
         filter: drop-shadow(0px 0px 3px rgba(0, 0, 0, 1));
+
     }
 
     input,

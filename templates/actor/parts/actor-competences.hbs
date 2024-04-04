@@ -45,10 +45,10 @@
       </div>
       <div class='item-roll'>
         {{#if (eq item.system.rollType "ability")}}
-          <img class="item-roll-img" src="systems/debilus/assets/{{item.system.rollAbility}}.svg" title="{{localize item.system.rollAbility}}" height="24" />
+          <img class="item-roll-img" src="systems/debilus/assets/{{../gameSetting}}/{{item.system.rollAbility}}.svg" title="{{localize (concat ../gameSetting ".ability." item.system.rollAbility)}}" height="24" />
         {{/if}}
         {{#if (eq item.system.rollType "aptitude")}}
-          <img class="item-roll-img" src="systems/debilus/assets/{{item.system.rollAptitude}}.svg" title="{{localize item.system.rollAptitude}}" height="24" />
+          <img class="item-roll-img" src="systems/debilus/assets/{{../gameSetting}}/{{item.system.rollAptitude}}.svg" title="{{localize (concat ../gameSetting ".aptitude." item.system.rollAptitude)}}" height="24" />
         {{/if}}
       </div>
       <div class='item-value'>

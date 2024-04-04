@@ -38,11 +38,9 @@
             <label class="ability-label">Carac.</label>
             <select name="system.rollAbility" data-dtype="String">
               {{#select system.rollAbility}}
-                <option value="force">Force</option>
-                <option value="agilite">Agilité</option>
-                <option value="corps">Corps</option>
-                <option value="esprit">Esprit</option>
-                <option value="charisme">Charisme</option>
+                {{#each abilities}}
+                  <option value="{{this}}">{{localize (concat ../gameSetting ".ability." this)}}</option>
+                {{/each}}
               {{/select}}
             </select>
           </div>
@@ -53,14 +51,9 @@
             <label class="aptitude-label">Aptitude</label>
             <select name="system.rollAptitude" data-dtype="String">
               {{#select system.rollAptitude}}
-                <option value="esquive">Esquive</option>
-                <option value="melee">Mélée</option>
-                <option value="tir">Tir</option>
-                <option value="furtivite">Furtivité</option>
-                <option value="perception">Perception</option>
-                <option value="savoir">Savoir</option>
-                <option value="social">Social</option>
-                <option value="magie">Magie</option>
+                {{#each aptitudes}}
+                  <option value="{{this}}">{{localize (concat ../gameSetting ".aptitude." this)}}</option>
+                {{/each}}
               {{/select}}
             </select>
           </div>

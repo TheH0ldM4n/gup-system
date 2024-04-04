@@ -20,6 +20,52 @@
   "ability": "Caractéristique",
   "aptitude": "Aptitude",
 
+  "fantasy": {
+    "ability": {
+      "force": "Force",
+      "agilite": "Agilité",
+      "corps": "Corps",
+      "esprit": "Esprit",
+      "charisme": "Charisme",
+      "none": "-"
+    },
+    "aptitude": {
+      "defense": "Défense",
+      "esquive": "Esquive",
+      "melee": "Mêlée",
+      "tir": "Tir",
+      "furtivite": "Furtivité",
+      "perception": "Perception",
+      "savoir": "Savoir",
+      "social": "Social",
+      "magie": "Magie",
+      "none": "-"
+    }
+  },
+
+  "starwars": {
+    "ability": {
+      "force": "Puissance",
+      "agilite": "Agilité",
+      "corps": "Corps",
+      "esprit": "Esprit",
+      "charisme": "Charisme",
+      "none": "-"
+    },
+    "aptitude": {
+      "defense": "Défense",
+      "esquive": "Esquive",
+      "melee": "Mêlée",
+      "tir": "Tir",
+      "furtivite": "Furtivité",
+      "perception": "Perception",
+      "savoir": "Savoir",
+      "social": "Social",
+      "magie": "Force",
+      "none": "-"
+    }
+  },
+
   "DEBILUS": {
     "Settings": {
       "Labels": {

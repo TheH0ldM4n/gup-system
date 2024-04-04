@@ -7,10 +7,12 @@
   background: rgba(0, 0, 0, 0.05);
   border: $border-groove;
   font-weight: bold;
-  > * {
+
+  >* {
     font-size: 14px;
     text-align: center;
   }
+
   .item-name {
     font-weight: bold;
     padding-left: 5px;
@@ -48,14 +50,16 @@
     text-align: left;
     align-items: center;
     display: flex;
-    h3, h4 {
+
+    h3,
+    h4 {
       margin: 0;
       white-space: nowrap;
       overflow-x: hidden;
     }
   }
 
-  
+
   .item-quantity {
     flex: 0 0 50px;
     display: flex;
@@ -101,6 +105,7 @@
     display: flex;
     flex: 0 0 50px;
     justify-content: flex-end;
+
     a {
       font-size: 12px;
       text-align: center;
@@ -115,11 +120,17 @@
   // Individual Item
   .item {
     align-items: center;
+    margin: 0 0 3px 0;
     padding: 0 2px; // to align with the header border
     border-bottom: 1px solid $c-faint;
-    &:last-child { border-bottom: none; }
+
+    &:last-child {
+      border-bottom: none;
+    }
+
     .item-name {
       color: $c-dark;
+
       .item-image {
         flex: 0 0 30px;
         height: 30px;
@@ -145,17 +156,18 @@
   // Section Header
   .items-header {
     height: 28px;
-    margin: 0 0 3px 0;
     padding: 0;
     align-items: center;
     background: rgba(0, 0, 0, 0.05);
     border: none;
     border-bottom: $border-groove;
     font-weight: bold;
-    > * {
+
+    >* {
       font-size: 12px;
       text-align: center;
     }
+
     .item-name {
       padding-left: 5px;
       text-align: left;
@@ -166,7 +178,7 @@
 
 // Example style for Debilus (can be removed if not needed).
 .item-formula {
-  
+
   flex: 0 0 200px;
   padding: 0 8px;
 }
@@ -208,7 +220,7 @@
       box-shadow: none;
       border: none;
     }
-    
+
   }
 
   input[type="checkbox"] {
@@ -218,7 +230,7 @@
     padding: 0;
     margin: 0;
   }
-  
+
 }
 
 .currency {
@@ -250,7 +262,7 @@
       height: 25px;
       border: none;
       background: none;
-      color:white;
+      color: white;
       font-size: 1em;
       @include stroke(black, 1px);
 
@@ -263,4 +275,82 @@
 
   }
 
+}
+
+.starwars {
+
+  .items-list,
+  .item-name {
+    color: white !important;
+  }
+
+  .items .items-list {
+    margin-top: 40px !important;
+  }
+
+  .items-list {
+    @include neon-box;
+    margin: 8px 3px 0 3px;
+    border: none !important;
+
+    .item {
+      margin: 0;
+      @include neon-box;
+    }
+  }
+
+  .item-name {
+    font-weight: bold !important;
+
+    img {
+      border-radius: 0;
+      border: none;
+      margin: 2px;
+    }
+  }
+
+  .armor {
+    top: 6px;
+    left: 10px;
+    bottom: unset;
+    @include neon-text;
+
+    select, img {
+      filter: drop-shadow(0 0 1px white) drop-shadow(0 0 1px white) drop-shadow(0 0 2px yellow) drop-shadow(0 0 2px yellow);
+    }
+
+    input[type="checkbox"]:checked {
+      @include neon-drop;
+    }
+
+    .separator {
+      @include neon-text;
+    }
+  }
+
+  .currency {
+    top: 6px;
+    right: 10px;
+    bottom: unset;
+
+    .currency-item {
+
+      &.silver,
+      &.copper {
+        display: none;
+      }
+
+      &.gold {
+        input {
+          width: 120px;
+          text-align: right;
+          caret-color: white !important
+        }
+        img {
+          content: url("/systems/debilus/assets/starwars/credit.svg");
+          filter: drop-shadow(0 0 5px yellow);
+        }
+      }
+    }
+  }
 }

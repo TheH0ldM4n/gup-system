@@ -57,6 +57,8 @@ export class ItemRoll {
     _buildRollMessage(actor) {
         const rollMessageTpl = 'systems/debilus/templates/chat/skill-roll-card.hbs';
 
+        console.log("ROLL", this);
+
         let value = this._value + this._valueBonus;
 
         if (this._isCritical) {

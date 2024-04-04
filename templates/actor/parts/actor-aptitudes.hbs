@@ -2,16 +2,19 @@
     {{#each system.aptitudes as |aptitude key|}}
         <div class="aptitude">
         <img 
-            src="systems/debilus/assets/{{key}}.svg" 
+            src="systems/debilus/assets/{{../gameSetting}}/{{key}}.svg" 
             for="system.aptitudes.{{key}}.value" 
             class="rollable"
             title="{{aptitude.label}}" 
+            data-key="{{key}}"
             data-roll="{{aptitude.value}}" 
             data-label="{{aptitude.label}}" 
             data-type="aptitude"
-            data-img="systems/debilus/assets/{{key}}.svg"
+            data-img="systems/debilus/assets/{{../gameSetting}}/{{key}}.svg"
         />
-        <span class="label">{{aptitude.label}}</span>
+        <span class="label">
+            {{localize (concat ../gameSetting ".aptitude." key)}}
+        </span>
         <input class="value" type="text" name="system.aptitudes.{{key}}.value" value="{{aptitude.value}}" data-dtype="Number" disabled />
         </div>
     {{/each}}

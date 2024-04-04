@@ -49,6 +49,18 @@ export class DebilusItemSheet extends ItemSheet {
     // Prepare active effects for easier access
     context.effects = prepareActiveEffectCategories(this.item.effects);
 
+    // Get template actor abilities keys
+    const abilities = this.item.actor.system.abilities;
+    context.abilities = Object.keys(abilities);
+
+
+    // Get template actor aptitudes
+    const aptitudes = this.item.actor.system.aptitudes;
+    context.aptitudes = Object.keys(aptitudes);
+
+    // Get gameSetting for the system
+    context.gameSetting = game.settings.get('debilus', 'setting');
+
     return context;
   }
 

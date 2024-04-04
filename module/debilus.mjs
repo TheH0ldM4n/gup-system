@@ -62,13 +62,14 @@ Hooks.once('init', function () {
     hint: 'DEBILUS.Settings.Hints.Setting',
     scope: 'world',
     config: true,
+    restricted: true,
+    requiresReload: true,
     type: String,
     choices: {
       fantasy: 'DEBILUS.Settings.Setting.Fantasy',
+      starwars: 'DEBILUS.Settings.Setting.StarWars',
       scifi: 'DEBILUS.Settings.Setting.SciFi',
       modern: 'DEBILUS.Settings.Setting.Modern',
-      wow: 'DEBILUS.Settings.Setting.WoW',
-      starwars: 'DEBILUS.Settings.Setting.StarWars',
     },
     default: 'fantasy',
   });

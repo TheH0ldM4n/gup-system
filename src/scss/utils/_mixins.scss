@@ -26,3 +26,22 @@
     -#{$size}  #{$size} 0 $color,
     -#{$size}  0        0 $color;
 }
+
+@mixin stroke-drop($color: #000, $size: 1px) {
+  filter: drop-shadow(-#{$size} -#{$size} 0 $color) drop-shadow(0 -#{$size} 0 $color) drop-shadow(#{$size} -#{$size} 0 $color) drop-shadow(#{$size} 0 0 $color) drop-shadow(#{$size} #{$size} 0 $color) drop-shadow(0 #{$size} 0 $color) drop-shadow(-#{$size} #{$size} 0 $color) drop-shadow(-#{$size} 0 0 $color);
+}
+
+@mixin neon-box($color: $neon-default, $size: 3px) {
+  border: 1px solid #fff !important;
+  border-radius: 0px;
+  box-shadow: 0 0 $size $color, 0 0 $size $color, 0 0 $size $color, inset 0 0 $size $color, inset 0 0 $size $color, inset 0 0 $size $color;
+}
+
+@mixin neon-drop($color: $neon-default, $size: 3px) {
+  filter: drop-shadow(0 0 1px white) drop-shadow(0 0 1px white) drop-shadow(0 0 2px white) drop-shadow(0 0 $size $color) drop-shadow(0 0 $size $color);
+}
+
+@mixin neon-text($color: $neon-default, $size: 5px, $stroke-color: black, $text-color: white) {
+  color: $text-color !important;
+  text-shadow: 0 0 1px $stroke-color, 0 0 2px $stroke-color, 0 0 3px $stroke-color, 0 0 $size $color, 0 0 $size $color, 0 0 $size $color;
+}

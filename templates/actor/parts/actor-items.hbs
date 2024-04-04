@@ -1,21 +1,21 @@
 
 <div class="currency">
-  <div class="currency-item">
+  <div class="currency-item gold">
     <input type="number" name="system.money.gold" value="{{system.money.gold}}" />
-    <img src="systems/debilus/assets/po.svg" title="Or" height="24" />
+    <img src="systems/debilus/assets/{{gameSetting}}/po.svg" title="Or" height="24" />
   </div>
-  <div class="currency-item">
+  <div class="currency-item silver">
     <input type="number" name="system.money.silver" value="{{system.money.silver}}" />
-    <img src="systems/debilus/assets/pa.svg" title="Argent" height="24" />
+    <img src="systems/debilus/assets/{{gameSetting}}/pa.svg" title="Argent" height="24" />
   </div>
-  <div class="currency-item">
+  <div class="currency-item copper">
     <input type="number" name="system.money.copper" value="{{system.money.copper}}" />
-    <img src="systems/debilus/assets/pc.svg" title="Cuivre" height="24" />
+    <img src="systems/debilus/assets/{{gameSetting}}/pc.svg" title="Cuivre" height="24" />
   </div>
 </div>
 
 <div class="armor">
-    <img src="systems/debilus/assets/armor.svg" title="Armure" height="24" />
+    <img src="systems/debilus/assets/{{gameSetting}}/armor.svg" title="Armure" height="24" />
     <select name="system.attributes.armor.value">
       <option value="0" {{#if (eq system.attributes.armor.value "0")}}selected{{/if}}>Aucune</option>
       <option value="1" {{#if (eq system.attributes.armor.value "1")}}selected{{/if}}>Légère (+1)</option>
@@ -62,10 +62,10 @@
       </div>
       <div class='item-roll'>
         {{#if (eq item.system.rollType "ability")}}
-          <img class="item-roll-img" src="systems/debilus/assets/{{item.system.rollAbility}}.svg" title="{{localize item.system.rollAbility}}" height="24" />
+          <img class="item-roll-img" src="systems/debilus/assets/{{../gameSetting}}/{{item.system.rollAbility}}.svg" title="{{localize item.system.rollAbility}}" height="24" />
         {{/if}}
         {{#if (eq item.system.rollType "aptitude")}}
-          <img class="item-roll-img" src="systems/debilus/assets/{{item.system.rollAptitude}}.svg" title="{{localize item.system.rollAptitude}}" height="24" />
+          <img class="item-roll-img" src="systems/debilus/assets/{{../gameSetting}}/{{item.system.rollAptitude}}.svg" title="{{localize item.system.rollAptitude}}" height="24" />
         {{/if}}
       </div>
       <div class='item-value'>

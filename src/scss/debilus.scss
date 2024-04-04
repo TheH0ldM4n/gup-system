@@ -18,19 +18,18 @@
 
 /* Styles limited to debilus sheets */
 .debilus {
-  @import 'components/forms';
-  @import 'components/resource';
-  @import 'components/items';
-  @import 'components/effects';
+	@import 'components/forms';
+	@import 'components/resource';
+	@import 'components/items';
+	@import 'components/effects';
 }
 
 /* Custom CSS */
 
 .chat-message .message-header h4,
 .chat-message .message-header .message-metadata .message-timestamp,
-.chat-message .message-header .message-metadata .message-delete .fas
-{
-	color: rgba(255,255,255,0.3) !important;
+.chat-message .message-header .message-metadata .message-delete .fas {
+	color: rgba(255, 255, 255, 0.3) !important;
 }
 
 .chat-message {
@@ -39,25 +38,24 @@
 
 .chat-message,
 .chat-message.whisper,
-.chat-message.whisper.blind
-{
+.chat-message.whisper.blind {
 	background-image: none;
 	color: wheat;
 	background-color: rgb(21 21 22);
 	border-radius: 5px;
-	box-shadow: 0 0 5px rgba(255,255,255, 0.7);
+	box-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
 	margin: 15px 10px;
 	border: none;
 }
 
 .chat-message.whisper {
-	box-shadow: 0 0 5px rgba(255,100,255, 0.7);
+	box-shadow: 0 0 5px rgba(255, 100, 255, 0.7);
 	background-color: rgb(35 21 35);
 }
 
 
 .chat-message.whisper.blind {
-	box-shadow: 0 0 5px rgba(255,255,0, 0.7);
+	box-shadow: 0 0 5px rgba(255, 255, 0, 0.7);
 	background-color: rgb(35 35 15);
 }
 
@@ -66,9 +64,8 @@
 }
 
 .dice-result .dice-formula,
-.dice-result .dice-total
-{
-	background-color: rgba(255,255,200,0.15);
+.dice-result .dice-total {
+	background-color: rgba(255, 255, 200, 0.15);
 	box-shadow: none;
 }
 
@@ -79,12 +76,41 @@
 	width: 100%;
 	height: 100% !important;
 	background-color: #eaeaea;
+
+	&.starwars {
+		background-color: #151515;
+		padding: 4px;
+		@include neon-box;
+		border: 1px solid white;
+
+		input {
+			color: #fff;
+		}
+
+		.biography {
+			color: #fff;
+		}
+
+		.profile-img {
+			@include neon-box;
+		}
+
+		.sheet-tabs {
+			background-color: black;
+			@include neon-box;
+			color: white;
+
+			.item.active {
+				@include neon-text;
+			}
+		}
+	}
 }
 
 img.inline {
 	width: 24px;
 	height: 24px;
 	vertical-align: middle;
-    border: none;
-    filter: drop-shadow(0px 0px 2px black);
+	border: none;
+	filter: drop-shadow(0px 0px 2px black);
 }
