@@ -20,17 +20,6 @@ release_foundry_package:
 
       SYSTEM_JSON_URL="$CI_PROJECT_URL/-/raw/$CI_COMMIT_TAG/system.json"
 
-      CURL_BODY='{
-        "id": "debilus",
-        "dry-run": true,
-        "release": {
-          "version": "'$VERSION'"
-          "manifest": "'$SYSTEM_JSON_URL'",
-          "notes": "'$CI_PROJECT_URL'/-/releases/'$CI_COMMIT_TAG'",
-          "compatibility": '"$COMPATIBILITY"'
-        }
-      }'
-
       echo "Curl body: $CURL_BODY"
       echo "Token: $FOUNDRY_RELEASE_TOKEN"
 
@@ -38,7 +27,16 @@ release_foundry_package:
       DRY_RUN_RESPONSE=$(curl -s -o response.json -w "%{http_code}" -X POST "https://api.foundryvtt.com/_api/packages/release_version/" \
         -H "Content-Type: application/json" \
         -H "Authorization: $FOUNDRY_RELEASE_TOKEN" \
-        -d "$CURL_BODY"
+        -d '{
+          "id": "debilus",
+          "dry-run": true,
+          "release": {
+            "version": "'$VERSION'"
+            "manifest": "'$SYSTEM_JSON_URL'",
+            "notes": "'$CI_PROJECT_URL'/-/releases/'$CI_COMMIT_TAG'",
+            "compatibility": '"$COMPATIBILITY"'
+          }
+        }'
       )
 
       if [ "$DRY_RUN_RESPONSE" -eq 200 ]; then
