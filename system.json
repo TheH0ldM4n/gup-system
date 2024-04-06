@@ -20,9 +20,8 @@
   ],
   "version": "0.0.3",
   "compatibility": {
-    "minimum": "11.315+",
-    "verified": "11",
-    "maximum": ""
+    "minimum": "11.315",
+    "verified": 11
   },
   "esmodules": ["module/debilus.mjs"],
   "styles": ["css/debilus.css"],
