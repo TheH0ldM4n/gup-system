@@ -31,7 +31,7 @@ release_foundry_package:
           "id": "debilus",
           "dry-run": true,
           "release": {
-            "version": "'$VERSION'"
+            "version": "'$VERSION'",
             "manifest": "'$SYSTEM_JSON_URL'",
             "notes": "'$CI_PROJECT_URL'/-/releases/'$CI_COMMIT_TAG'",
             "compatibility": '"$COMPATIBILITY"'
