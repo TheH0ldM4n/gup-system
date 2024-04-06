@@ -55,5 +55,6 @@ release_foundry_package:
         echo "FAKE RELEASE - uncomment the above curl command to perform the actual release"
       else
         echo "Dry run failed, aborting..."
+        echo "Response: $(cat response.json)"
         exit 1
       fi
