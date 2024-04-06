@@ -101,7 +101,7 @@ export class DebilusActor extends Actor {
     aptitudes.perception.value  = Math.floor((ab.esprit.value       + ab.esprit.value   + att.level.value) / 3);
     aptitudes.savoir.value      = Math.floor((ab.esprit.value       + ab.charisme.value + att.level.value) / 3);
     aptitudes.social.value      = Math.floor((ab.charisme.value     + ab.charisme.value + att.level.value) / 3);
-    aptitudes.magie.value       = Math.floor((ab.esprit.value       + ab.corps.value    + att.level.value) / 3);
+    aptitudes.magie.value       = Math.floor((ab.esprit.value       + ab.esprit.value   + ab.corps.value ) / 3);
 
     delete aptitudes.defense;
     delete systemData.pm;

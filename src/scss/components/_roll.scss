@@ -27,6 +27,10 @@
     border: 1px solid black;
     border-radius: 5px;
     background-color: rgba(255, 222, 180, 0.2);
+
+    body.starwars & {
+      background-color: rgba(0, 0, 0, 0.2);
+    }
   
     p {
       padding: 0;

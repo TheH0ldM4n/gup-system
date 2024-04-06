@@ -20,7 +20,6 @@ Hooks.once('init', function () {
     DebilusItem,
     rollItemMacro,
   };
-  
 
   // Add custom constants for configuration.
   CONFIG.DEBILUS = DEBILUS;
@@ -74,6 +73,9 @@ Hooks.once('init', function () {
     default: 'fantasy',
   });
 
+  let gameSetting = game.settings.get('debilus', 'setting');
+  document.body.classList.add(gameSetting);
+
   // Preload Handlebars templates.
   return preloadHandlebarsTemplates();
 });
@@ -84,10 +86,6 @@ Hooks.once('init', function () {
 /* -------------------------------------------- */
 
 // // On combat start, reset all actors' actions to their max value & reset cooldowns
-// Hooks.on("combatStart", async (combat, options, userId) => {
-//   console.error("combatStart");
-//   await resetActionsAndCooldowns();
-// });
 
 // On combat end, reset all actors' actions to their max value & reset cooldowns
 Hooks.on("combatEnd", async (combat, options, userId) => {
@@ -229,9 +227,6 @@ Handlebars.registerHelper('equal', function(lvalue, rvalue, options) {
 
 // Helper that converts every special character to its HTML entity
 Handlebars.registerHelper('htmlEntities', function(str) {
-
-  console.log("STRING", str);
-
   return str.replace(/[\u00A0-\u9999<>\&]/gim, function(i) {
     return '&#'+i.charCodeAt(0)+';';
   });
@@ -248,11 +243,8 @@ Hooks.once('ready', function () {
 
 // socketlib
 Hooks.once('socketlib.ready', () => {
-  console.log('Registering socketlib system for debilus.');
   DEBILUS.socket = socketlib.registerSystem('debilus');
   DEBILUS.socket.register("sendSoundToPlayer", sendSoundToPlayer);
-
-  console.log('DEBILUS.socket', DEBILUS.socket);
 });
 
 function sendSoundToPlayer(soundPath, targetUserId) {

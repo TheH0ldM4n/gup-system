@@ -60,9 +60,6 @@ export class DebilusActorSheet extends ActorSheet {
     // add the game setting to the context
     context.gameSetting = this._gameSetting;
 
-    console.log('context', context);
-    console.log("gameSetting", this._gameSetting);
-
     // Prepare character data and items.
     if (actorData.type == "character") {
       this._prepareItems(context);
@@ -339,7 +336,6 @@ export class DebilusActorSheet extends ActorSheet {
                   }
 
                   // Check if cooldown is < 1
-                  console.log("ITEM", this._item);
                   if(this._item.type === "competence" && this._item.system.cooldown.value > 0 && this._item.system.cooldown.remaining > 0 && activeEncounter) {
                     let turns = this._item.system.cooldown.remaining > 1 ? "tours" : "tour";
                     ui.notifications.error("Vous devez encore attendre " + this._item.system.cooldown.remaining + " " + turns + " avant de pouvoir réutiliser cette compétence.");

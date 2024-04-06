@@ -37,6 +37,11 @@
   box-shadow: 0 0 $size $color, 0 0 $size $color, 0 0 $size $color, inset 0 0 $size $color, inset 0 0 $size $color, inset 0 0 $size $color;
 }
 
+@mixin neon-box-noborder($color: $neon-default, $size: 3px) {
+  border-radius: 0px;
+  box-shadow: 0 0 $size $color, 0 0 $size $color, 0 0 $size $color, inset 0 0 $size $color, inset 0 0 $size $color, inset 0 0 $size $color;
+}
+
 @mixin neon-drop($color: $neon-default, $size: 3px) {
   filter: drop-shadow(0 0 1px white) drop-shadow(0 0 1px white) drop-shadow(0 0 2px white) drop-shadow(0 0 $size $color) drop-shadow(0 0 $size $color);
 }

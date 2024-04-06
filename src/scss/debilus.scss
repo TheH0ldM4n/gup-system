@@ -81,7 +81,9 @@
 		background-color: #151515;
 		padding: 4px;
 		@include neon-box;
-		border: 1px solid white;
+		border-left: none !important;
+		border-right: none !important;
+		border-bottom: none !important;
 
 		input {
 			color: #fff;
@@ -99,6 +101,12 @@
 			background-color: black;
 			@include neon-box;
 			color: white;
+			left: 0px;
+			bottom: 0px;
+			right: 0px;
+			border-left: none !important;
+			border-right: none !important;
+			border-bottom: none !important;
 
 			.item.active {
 				@include neon-text;

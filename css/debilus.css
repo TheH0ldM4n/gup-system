@@ -18,6 +18,60 @@
   cursor: pointer;
 }
 
+body.starwars .window-app {
+  border: 1px solid #fff !important;
+  border-radius: 0px;
+  box-shadow: 0 0 3px #0000ff, 0 0 3px #0000ff, 0 0 3px #0000ff, inset 0 0 3px #0000ff, inset 0 0 3px #0000ff, inset 0 0 3px #0000ff;
+}
+body.starwars .chat-message {
+  border: 1px solid #fff !important;
+  border-radius: 0px;
+  box-shadow: 0 0 3px #0000ff, 0 0 3px #0000ff, 0 0 3px #0000ff, inset 0 0 3px #0000ff, inset 0 0 3px #0000ff, inset 0 0 3px #0000ff;
+  background-color: #000 !important;
+  color: #fff !important;
+}
+body.starwars .chat-message * {
+  color: #fff !important;
+}
+body.starwars .chat-message hr {
+  border-color: #fff !important;
+  border-radius: 0px;
+  box-shadow: 0 0 3px #0000ff, 0 0 3px #0000ff, 0 0 3px #0000ff, inset 0 0 3px #0000ff, inset 0 0 3px #0000ff, inset 0 0 3px #0000ff;
+}
+body.starwars .chat-message .dice-result .dice-formula, body.starwars .chat-message .dice-result .dice-total {
+  border: 1px solid #fff !important;
+  border-radius: 0px;
+  box-shadow: 0 0 3px #0000ff, 0 0 3px #0000ff, 0 0 3px #0000ff, inset 0 0 3px #0000ff, inset 0 0 3px #0000ff, inset 0 0 3px #0000ff;
+}
+body.starwars .chat-message.whisper {
+  border: 1px solid #fff !important;
+  border-radius: 0px;
+  box-shadow: 0 0 3px #ff00ff, 0 0 3px #ff00ff, 0 0 3px #ff00ff, inset 0 0 3px #ff00ff, inset 0 0 3px #ff00ff, inset 0 0 3px #ff00ff;
+}
+body.starwars .chat-message.whisper hr {
+  border-radius: 0px;
+  box-shadow: 0 0 3px #ff00ff, 0 0 3px #ff00ff, 0 0 3px #ff00ff, inset 0 0 3px #ff00ff, inset 0 0 3px #ff00ff, inset 0 0 3px #ff00ff;
+}
+body.starwars .chat-message.whisper .dice-result .dice-formula, body.starwars .chat-message.whisper .dice-result .dice-total {
+  border: 1px solid #fff !important;
+  border-radius: 0px;
+  box-shadow: 0 0 3px #ff00ff, 0 0 3px #ff00ff, 0 0 3px #ff00ff, inset 0 0 3px #ff00ff, inset 0 0 3px #ff00ff, inset 0 0 3px #ff00ff;
+}
+body.starwars .chat-message.whisper.blind {
+  border: 1px solid #fff !important;
+  border-radius: 0px;
+  box-shadow: 0 0 3px #ff7700, 0 0 3px #ff7700, 0 0 3px #ff7700, inset 0 0 3px #ff7700, inset 0 0 3px #ff7700, inset 0 0 3px #ff7700;
+}
+body.starwars .chat-message.whisper.blind hr {
+  border-radius: 0px;
+  box-shadow: 0 0 3px #ff7700, 0 0 3px #ff7700, 0 0 3px #ff7700, inset 0 0 3px #ff7700, inset 0 0 3px #ff7700, inset 0 0 3px #ff7700;
+}
+body.starwars .chat-message.whisper.blind .dice-result .dice-formula, body.starwars .chat-message.whisper.blind .dice-result .dice-total {
+  border: 1px solid #fff !important;
+  border-radius: 0px;
+  box-shadow: 0 0 3px #ff7700, 0 0 3px #ff7700, 0 0 3px #ff7700, inset 0 0 3px #ff7700, inset 0 0 3px #ff7700, inset 0 0 3px #ff7700;
+}
+
 .grid,
 .grid-2col {
   display: grid;
@@ -692,6 +746,9 @@ input {
   border-radius: 5px;
   background-color: rgba(255, 222, 180, 0.2);
 }
+body.starwars .roll-result {
+  background-color: rgba(0, 0, 0, 0.2);
+}
 .roll-result p {
   padding: 0;
   margin: 0;
@@ -1117,6 +1174,7 @@ input {
 .debilus .starwars .items-list,
 .debilus .starwars .item-name {
   color: white !important;
+  background: rgb(0, 0, 0) !important;
 }
 .debilus .starwars .items .items-list {
   margin-top: 40px !important;
@@ -1245,7 +1303,9 @@ input {
   border: 1px solid #fff !important;
   border-radius: 0px;
   box-shadow: 0 0 3px #0000ff, 0 0 3px #0000ff, 0 0 3px #0000ff, inset 0 0 3px #0000ff, inset 0 0 3px #0000ff, inset 0 0 3px #0000ff;
-  border: 1px solid white;
+  border-left: none !important;
+  border-right: none !important;
+  border-bottom: none !important;
 }
 .debilus-sheet.starwars input {
   color: #fff;
@@ -1264,6 +1324,12 @@ input {
   border-radius: 0px;
   box-shadow: 0 0 3px #0000ff, 0 0 3px #0000ff, 0 0 3px #0000ff, inset 0 0 3px #0000ff, inset 0 0 3px #0000ff, inset 0 0 3px #0000ff;
   color: white;
+  left: 0px;
+  bottom: 0px;
+  right: 0px;
+  border-left: none !important;
+  border-right: none !important;
+  border-bottom: none !important;
 }
 .debilus-sheet.starwars .sheet-tabs .item.active {
   color: white !important;

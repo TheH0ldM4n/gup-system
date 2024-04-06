@@ -22,3 +22,53 @@
     cursor: pointer;
   }
 }
+
+body.starwars {
+
+  .window-app {
+    @include neon-box;
+  }
+
+  .chat-message {
+    @include neon-box;
+    background-color: #000 !important;
+    color: #fff !important;
+
+    * {
+      color: #fff !important;
+    }
+    
+    hr {
+      border-color: #fff !important;
+      @include neon-box-noborder;
+    }
+
+    .dice-result .dice-formula,.dice-result .dice-total {
+      @include neon-box;
+    }
+
+    &.whisper {
+      @include neon-box($color: #ff00ff);
+
+      hr {
+        @include neon-box-noborder($color: #ff00ff);
+      }
+
+      .dice-result .dice-formula,.dice-result .dice-total {
+        @include neon-box($color: #ff00ff);
+      }
+
+      &.blind { 
+        @include neon-box($color: #ff7700);
+
+        hr {
+          @include neon-box-noborder($color: #ff7700);
+        }
+
+        .dice-result .dice-formula,.dice-result .dice-total {
+          @include neon-box($color: #ff7700);
+        }
+      }
+    }
+  }
+}
