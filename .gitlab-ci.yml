@@ -8,8 +8,6 @@ release_foundry_package:
     entrypoint: [""]
   before_script:
     - apk add --no-cache curl jq # Ensure curl and jq are available
-  only:
-    - tags
   script:
     - |
       # Assume system.json is in the root directory of your repository
