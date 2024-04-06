@@ -18,7 +18,7 @@
       "thumbnail": "systems/debilus/assets/debilus.jpg"
     }
   ],
-  "version": "0.0.2",
+  "version": "0.0.3",
   "compatibility": {
     "minimum": "11.315+",
     "verified": "11",
