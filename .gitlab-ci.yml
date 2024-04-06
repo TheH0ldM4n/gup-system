@@ -9,21 +9,16 @@ release_foundry_package:
     name: alpine:latest
     entrypoint: [""]
   before_script:
-    - apk add --no-cache curl jq # Ensure curl and jq are available
+    - apk add --no-cache --upgrade bash curl jq
   script:
     - |
-      # Assume system.json is in the root directory of your repository
-      # Read and parse compatibility info using jq
       COMPATIBILITY=$(jq '.compatibility' system.json)
       VERSION=$(jq -r '.version' system.json)
-
-      # Assuming COMPATIBILITY contains the needed object in the correct format
-      echo "Extracted compatibility: $COMPATIBILITY"
-
       SYSTEM_JSON_URL="$CI_PROJECT_URL/-/raw/$CI_COMMIT_TAG/system.json"
 
-      echo "Curl body: $CURL_BODY"
+      echo "Extracted compatibility: $COMPATIBILITY"
       echo "Token: $FOUNDRY_RELEASE_TOKEN"
+      echo "Curl body: $CURL_BODY"
 
       # Dry Run
       DRY_RUN_RESPONSE=$(curl -s -o response.json -w "%{http_code}" -X POST "https://api.foundryvtt.com/_api/packages/release_version/" \
@@ -43,8 +38,7 @@ release_foundry_package:
 
       if [ "$DRY_RUN_RESPONSE" -eq 200 ]; then
         echo "Dry run successful, proceeding with actual release..."
-        # Actual Release
-        $(curl -s -o response.json -w "%{http_code}" -X POST "https://api.foundryvtt.com/_api/packages/release_version/" \
+        RUN_RESPONSE = $(curl -s -o response.json -w "%{http_code}" -X POST "https://api.foundryvtt.com/_api/packages/release_version/" \
           -H "Content-Type: application/json" \
           -H "Authorization: $FOUNDRY_RELEASE_TOKEN" \
           -d '{
@@ -58,6 +52,15 @@ release_foundry_package:
             }
           }'
         )
+
+        if [ "$RUN_RESPONSE" -eq 200 ]; then
+          echo "Release $VERSION successful!"
+        else
+          echo "Release failed, aborting..."
+          echo "Response: $(cat response.json)"
+          exit 1
+        fi
+
       else
         echo "Dry run failed, aborting..."
         echo "Response: $(cat response.json)"
