@@ -13,6 +13,7 @@ release_foundry_package:
       # Assume system.json is in the root directory of your repository
       # Read and parse compatibility info using jq
       COMPATIBILITY=$(jq '.compatibility' system.json)
+      VERSION=$(jq -r '.version' system.json)
 
       # Assuming COMPATIBILITY contains the needed object in the correct format
       echo "Extracted compatibility: $COMPATIBILITY"
@@ -23,7 +24,7 @@ release_foundry_package:
         "id": "debilus",
         "dry-run": true,
         "release": {
-          "version": "'$CI_COMMIT_TAG'",
+          "version": "'$VERSION'"
           "manifest": "'$SYSTEM_JSON_URL'",
           "notes": "'$CI_PROJECT_URL'/-/releases/'$CI_COMMIT_TAG'",
           "compatibility": '"$COMPATIBILITY"'
@@ -31,6 +32,7 @@ release_foundry_package:
       }'
 
       echo "Curl body: $CURL_BODY"
+      echo "Token: $FOUNDRY_RELEASE_TOKEN"
 
       # Dry Run
       DRY_RUN_RESPONSE=$(curl -s -o response.json -w "%{http_code}" -X POST "https://api.foundryvtt.com/_api/packages/release_version/" \
